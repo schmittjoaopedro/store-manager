@@ -1,0 +1,26 @@
+{
+  "name": "store-manager",
+  "version": "1.0.0",
+  "description": "Store manager",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/schmittjoaopedro/store-manager.git"
+  },
+  "keywords": [
+    "store",
+    "manager"
+  ],
+  "author": "João Pedro Schmitt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/schmittjoaopedro/store-manager/issues"
+  },
+  "homepage": "https://github.com/schmittjoaopedro/store-manager#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
