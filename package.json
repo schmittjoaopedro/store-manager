@@ -12,9 +12,13 @@
     "express": "~4.13.4",
     "mongoose": "~4.5.9",
     "mongoose-timestamp": "~0.6.0",
+    "passport-local-mongoose": "~4.0.0",
+    "passport": "~0.3.2",
+    "passport-local": "~1.0.0",
     "bluebird": "~3.4.1",
     "ejs": "~2.5.1",
     "morgan": "~1.7.0",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "cookie-session": "~2.0.0-alpha.1"
   }
 }

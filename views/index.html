@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<%- include('default-header.html') -%>
+		<%- include('header-imports.html') -%>
 	</head>
 	<body>
-
+		<% if(user) { %>
+			<p>You are currently logged in as <%= user.username %></p>
+		<% } else { %>
+			<p>You are currently not logged in. Plaese login or register...</p>
+		<% } %>
 	</body>
 </html>
