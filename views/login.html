@@ -4,19 +4,22 @@
 		<%- include('header-imports.html') -%>
 	</head>
 	<body>
-		<h2>Log In</h2>
-		<form action="/login" method="POST">
-			<div>
-				<label>Username</label>
-				<input type="text" name="username">
+		<%- include('header-bar.html') -%>
+		<div class="container">
+			<div class="row center">
+				<h2>Acesso restrito</h2>
+				<form action="/login" method="POST">
+					<div class="form-group">
+						<input class="form-control input-lg" type="text" name="username" placeholder="Login">
+					</div>
+					<div class="form-group">
+						<input class="form-control input-lg" type="password" name="password" placeholder="Senha">
+					</div>
+					<div>
+						<input type="submit" class="btn btn-primary btn-lg" name="Log In">
+					</div>
+				</form>
 			</div>
-			<div>
-				<label>Password</label>
-				<input type="password" name="password">
-			</div>
-			<div>
-				<input type="submit" name="Log In">
-			</div>
-		</form>
+		</div>
 	</body>
 </html>

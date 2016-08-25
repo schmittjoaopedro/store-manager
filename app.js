@@ -44,7 +44,7 @@ global.isAuthenticated = function(req, res, next) {
     }
 }
 app.use('/', require('./routes/index'));
-app.use('/test', require('./routes/test'));
+app.use('/client', require('./routes/client'));
 
 // Init database and models
 database.init().then(function () {

@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/register', function(req, res) {
-  res.render('register', { title: 'Register' });
+  res.render('register', { title: 'Register', user: req.user });
 });
 
 router.post('/register', function(req, res, next) {
