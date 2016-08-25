@@ -1,3 +1,4 @@
+// libraries
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -8,36 +9,46 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
+// database configurator
 var database = require('./database');
 
+// REST API
 var app = express();
-var routes = require('./routes/index');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
 app.engine('html', require('ejs').renderFile);
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// Configure webapp parameters
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session({keys: ['secretkey1', 'secretkey2', '...']}));
-
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Configure passport middleware
+app.use(require('express-session')({
+    secret: 'keyboard 4estacoes',
+    resave: false,
+    saveUninitialized: false
+}));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
+// Configure the routes
+global.isAuthenticated = function(req, res, next) {
+    if(req.isAuthenticated()) {
+        next();
+    } else {
+        res.redirect('/login');
+    }
+}
+app.use('/', require('./routes/index'));
+app.use('/test', require('./routes/test'));
 
+// Init database and models
 database.init().then(function () {
-    // use static authenticate method of model in LocalStrategy
     passport.use(new LocalStrategy(models.User.authenticate()));
-    // use static serialize and deserialize of model for passport session support
     passport.serializeUser(models.User.serializeUser());
     passport.deserializeUser(models.User.deserializeUser());
 });
