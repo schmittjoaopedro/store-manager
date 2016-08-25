@@ -15,7 +15,7 @@ var clientSchema = Schema({
     email: String,
     bills: [{
         type: Schema.Types.ObjectId,
-        
+        ref: 'Bill'
     }]
 });
 

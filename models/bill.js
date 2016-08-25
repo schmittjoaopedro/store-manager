@@ -6,7 +6,10 @@ var billSchema = Schema({
     puchaseDate: Date,
     dueData: Date,
     notes: String,
-    parcels: ['Parcel']
+    parcels: [{
+    	type: Schema.Types.ObjectId,
+    	ref: 'Parcel'
+    }]
 });
 
 module.exports = {
