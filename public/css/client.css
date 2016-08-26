@@ -1,3 +1,16 @@
 .client-form {
 	max-width: 50%;
 }
+
+.client-form label {
+	width: 150px;
+}
+
+.client-form input {
+	width: 300px !important;
+}
+
+.client-space {
+	width: 100px;
+	display:inline-block;
+}

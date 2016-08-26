@@ -8,21 +8,95 @@
 		<div id="clients">
 			<%- include('header-bar.html') -%>
 
-			<div v-if="!register">
+			<div v-if="!register" class="form-inline">
 				<h2>Clientes</h2>
 				<button type="button" class="btn btn-default" v-on:click="new">Novo</button>
-				<div>{{clients}}</div>
+				<span class="client-space"></span>
+				<label>Nome:</label>
+				<input type="text" name="name" class="form-control input-sm" v-on:keyup="loadData" v-model="name">
+				<label>CPF:</label>
+				<input type="text" name="cpf" class="form-control input-sm" v-on:keyup="loadData" v-model="cpf">
+				<table class="table table-hover table-condensed">
+					<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Celular</th>
+							<th>Telefone</th>
+							<th>CPF</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="c in clients">
+							<td>{{c.name}}</td>
+							<td>{{c.phoneOne}}</td>
+							<td>{{c.phoneTwo}}</td>
+							<td>{{c.cpf}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<nav aria-label="Page navigation">
+				  <ul class="pagination">
+				    <li v-for="p in pages"><a href="#" v-on:click="pagination(p)">{{p}}</a></li>
+				  </ul>
+				</nav>
 			</div>
 
 			<div v-if="register">
 				<h2>Cadastro de cliente</h2>
 				<button type="button" class="btn btn-default" v-on:click="back">Voltar</button>
 				<hr />
-				<div class="client-form">
+				<div class="form-inline client-form">
 					<div>
 						<label>Nome</label>
-						<input type="text" name="name" class="form-control input-sm">
+						<input type="text" name="name" class="form-control input-sm" v-model="client.name">
 					</div>
+					<br />
+					<div>
+						<label>CPF</label>
+						<input type="text" name="cpf" class="form-control input-sm" v-model="client.cpf">
+					</div>
+					<br />
+					<div>
+						<label>Data de nascimento</label>
+						<input type="date" name="bornDate" class="form-control input-sm" v-model="client.bornDate">
+					</div>
+					<br />
+					<div>
+						<label>País</label>
+						<input type="text" name="country" class="form-control input-sm" v-model="client.country">
+					</div>
+					<br />
+					<div>
+						<label>Estado</label>
+						<input type="text" name="state" class="form-control input-sm" v-model="client.state">
+					</div>
+					<br />
+					<div>
+						<label>Cidade</label>
+						<input type="text" name="city" class="form-control input-sm" v-model="client.city">
+					</div>
+					<br />
+					<div>
+						<label>Endereço</label>
+						<input type="text" name="address" class="form-control input-sm" v-model="client.address">
+					</div>
+					<br />
+					<div>
+						<label>Telefone fixo</label>
+						<input type="text" name="phoneOne" class="form-control input-sm" v-model="client.phoneOne">
+					</div>
+					<br />
+					<div>
+						<label>Telefone celular</label>
+						<input type="text" name="phoneTwo" class="form-control input-sm" v-model="client.phoneTwo">
+					</div>
+					<br />
+					<div>
+						<label>Email</label>
+						<input type="text" name="email" class="form-control input-sm" v-model="client.email">
+					</div>
+					<br />
+					<button type="button" class="btn btn-success" v-on:click="save">Salvar</button>
 				</div>
 			</div>
 

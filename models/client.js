@@ -3,7 +3,7 @@ var mongoose = require("mongoose"),
 
 var clientSchema = Schema({
 	name: String,
-    CPF: Number,
+    cpf: Number,
     bornDate: Date,
     country: String,
     state: String,
@@ -11,7 +11,6 @@ var clientSchema = Schema({
     address: String,
     phoneOne: String,
     phoneTwo: String,
-    whatsapp: String,
     email: String,
     bills: [{
         type: Schema.Types.ObjectId,
