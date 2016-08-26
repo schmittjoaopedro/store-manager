@@ -9,7 +9,11 @@ var billSchema = Schema({
     parcels: [{
     	type: Schema.Types.ObjectId,
     	ref: 'Parcel'
-    }]
+    }],
+    client: {
+        type: Schema.Types.ObjectId,
+        ref: 'Client'
+    }
 });
 
 module.exports = {

@@ -1,0 +1,16 @@
+.bill-form {
+	max-width: 50%;
+}
+
+.bill-form label {
+	width: 150px;
+}
+
+.bill-form input {
+	width: 300px !important;
+}
+
+.bill-space {
+	width: 100px;
+	display:inline-block;
+}

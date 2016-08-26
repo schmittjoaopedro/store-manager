@@ -11,16 +11,16 @@ var scope = new Vue({
 	},
 	methods: {
 		new: function(event) {
-			scope.client = {};
-			scope.register = true;
+			this.client = {};
+			this.register = true;
 		},
 		back: function(event) {
-			scope.register = false;
+			this.register = false;
 		},
 		save: function(event) {
-			if(scope.client.bornDate)
-				scope.client.bornDate = moment(scope.client.bornDate, "YYYY-MM-DD").toDate().getTime();
-			$.post('/clients', scope.client,'json').done(function (response) {
+			if(this.client.bornDate)
+				this.client.bornDate = moment(this.client.bornDate, "YYYY-MM-DD").toDate().getTime();
+			$.post('/clients', this.client,'json').done(function (response) {
 				alert("Client salvo com sucesso!");
 				scope.register = false;
 				scope.client = {};
@@ -39,11 +39,11 @@ var scope = new Vue({
 			})
 		},
 		edit: function(client) {
-			scope.client = client;
-			scope.register = true;
+			this.client = client;
+			this.register = true;
 		},
 		pagination: function(value) {
-			scope.page = value;
+			this.page = value;
 			loadData();
 		},
 		filterData: function(event) {
@@ -51,10 +51,10 @@ var scope = new Vue({
 		},
 		loadData: function loadData() {
 			$.get('/clients/list', { 
-				page: scope.page, 
+				page: this.page, 
 				limit: 20, 
-				name: scope.name, 
-				cpf: scope.cpf 
+				name: this.name, 
+				cpf: this.cpf 
 			}).done(function (resp) {
 				if(resp.data) {
 					resp.data.forEach(function(item) {

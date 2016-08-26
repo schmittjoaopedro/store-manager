@@ -11,11 +11,7 @@ var clientSchema = Schema({
     address: String,
     phoneOne: String,
     phoneTwo: String,
-    email: String,
-    bills: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Bill'
-    }]
+    email: String
 });
 
 module.exports = {
