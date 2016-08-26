@@ -1,5 +1,5 @@
 .bill-form {
-	max-width: 50%;
+	max-width: 70%;
 }
 
 .bill-form label {
@@ -7,7 +7,7 @@
 }
 
 .bill-form input {
-	width: 300px !important;
+	width: 400px !important;
 }
 
 .bill-space {

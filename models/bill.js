@@ -4,7 +4,6 @@ var mongoose = require("mongoose"),
 var billSchema = Schema({
     amount: Number,
     puchaseDate: Number,
-    dueData: Number,
     notes: String,
     parcels: [{
     	type: Schema.Types.ObjectId,

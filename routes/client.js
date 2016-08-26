@@ -34,7 +34,7 @@ router.get('/list', isAuthenticated, function(req, res) {
 	var name = req.query.name;
 	var skip = parseInt(req.query.page);
 	var limit = parseInt(req.query.limit);
-	var cpf = parseInt(req.query.cpf);
+	var cpf = req.query.cpf;
 	var filter = {};
 	if(name) filter.name = new RegExp(name, "i");
 	if(cpf) filter.cpf = cpf;
@@ -50,6 +50,19 @@ router.get('/list', isAuthenticated, function(req, res) {
 	}).catch(function(err) {
 		res.send(err);
 	});
+});
+
+router.get('/find', isAuthenticated, function(req, res) {
+	var name = req.query.name;
+	var filter = {};
+	if(name) {
+		filter.name = new RegExp(name, "i");
+	}
+	models.Client.find(filter).then(function(clients) {
+		res.json(clients);
+	}).catch(function(err) {
+		res.send(err);
+	})
 });
 
 router.delete('/:id', isAuthenticated, function(req, res) {

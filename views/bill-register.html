@@ -1,12 +1,33 @@
 <h4>Cadastro de venda</h4>
 <button type="button" class="btn btn-default btn-sm" v-on:click="back">Cancelar</button>
 <hr />
+<div class="form-inline">
+	<span v-if="!clientView">
+		<span style="width: 150px; display:inline-block;">
+			<button type="button" class="btn btn-default btn-sm" v-on:click="findClients" >Buscar cliente</button>
+		</span>	
+		<label style="width: 450px;">Cliente: {{client.name}}</label>
+	</span>
+	<div v-if="clientView">
+		<%- include('bill-client.html') -%>
+	</div>
+</div>	
 <div class="form-inline bill-form">
+		<br />
 		<div>
-			<label>Cliente</label>
-			<input type="text" name="name" class="form-control input-sm" v-model="bill.client">
+			<label>Valor</label>
+			<input type="text" class="form-control input-sm" v-model="bill.amount">
 		</div>
 		<br />
+		<div>
+			<label>Data de compra</label>
+			<input type="date" class="form-control input-sm" v-model="bill.puchaseDate">
+		</div>
+		<br />
+		<div>
+			<label>Descrição</label>
+			<textarea rows="10" cols="55" class="form-control input-sm" v-model="bill.notes"></textarea>
+		</div>
 		<button type="button" class="btn btn-success btn-sm" v-on:click="save">Salvar</button>
 	</div>
 </div>
