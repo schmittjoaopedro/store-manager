@@ -3,8 +3,8 @@ var mongoose = require("mongoose"),
 
 var clientSchema = Schema({
 	name: String,
-    cpf: Number,
-    bornDate: Date,
+    cpf: String,
+    bornDate: Number,
     country: String,
     state: String,
     city: String,

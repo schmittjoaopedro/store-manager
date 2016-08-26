@@ -10,7 +10,7 @@
 
 			<div v-if="!register" class="form-inline">
 				<h2>Clientes</h2>
-				<button type="button" class="btn btn-default" v-on:click="new">Novo</button>
+				<button type="button" class="btn btn-default btn-sm" v-on:click="new">Novo</button>
 				<span class="client-space"></span>
 				<label>Nome:</label>
 				<input type="text" name="name" class="form-control input-sm" v-on:keyup="loadData" v-model="name">
@@ -23,6 +23,7 @@
 							<th>Celular</th>
 							<th>Telefone</th>
 							<th>CPF</th>
+							<th>Ações</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -31,19 +32,21 @@
 							<td>{{c.phoneOne}}</td>
 							<td>{{c.phoneTwo}}</td>
 							<td>{{c.cpf}}</td>
+							<td>
+								<button type="button" class="btn btn-primary btn-sm" v-on:click="edit(c)">Editar</button>
+								<button type="button" class="btn btn-danger btn-sm" v-on:click="remove(c)">Apagar</button>
+							</td>
 						</tr>
 					</tbody>
 				</table>
-				<nav aria-label="Page navigation">
-				  <ul class="pagination">
-				    <li v-for="p in pages"><a href="#" v-on:click="pagination(p)">{{p}}</a></li>
-				  </ul>
-				</nav>
+				<ul class="pagination pagination-sm">
+					<li v-for="p in pages"><a href="#" v-on:click="pagination(p)">{{p}}</a></li>
+				</ul>
 			</div>
 
 			<div v-if="register">
 				<h2>Cadastro de cliente</h2>
-				<button type="button" class="btn btn-default" v-on:click="back">Voltar</button>
+				<button type="button" class="btn btn-default btn-sm" v-on:click="back">Voltar</button>
 				<hr />
 				<div class="form-inline client-form">
 					<div>
@@ -96,11 +99,12 @@
 						<input type="text" name="email" class="form-control input-sm" v-model="client.email">
 					</div>
 					<br />
-					<button type="button" class="btn btn-success" v-on:click="save">Salvar</button>
+					<button type="button" class="btn btn-success btn-sm" v-on:click="save">Salvar</button>
 				</div>
 			</div>
 
 		</div>
 	</body>
+	<script type="text/javascript" src="/lib/moment/moment.js"></script>
 	<script type="text/javascript" src="/js/client.js"></script>
 </html>

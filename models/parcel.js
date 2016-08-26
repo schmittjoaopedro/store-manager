@@ -3,7 +3,7 @@ var mongoose = require("mongoose"),
 
 var parcelSchema = Schema({
     value: Number,
-    paymentDate: Date,
+    paymentDate: Number,
     payed: Boolean
 });
 

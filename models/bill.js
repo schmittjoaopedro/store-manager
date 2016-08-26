@@ -3,8 +3,8 @@ var mongoose = require("mongoose"),
 
 var billSchema = Schema({
     amount: Number,
-    puchaseDate: Date,
-    dueData: Date,
+    puchaseDate: Number,
+    dueData: Number,
     notes: String,
     parcels: [{
     	type: Schema.Types.ObjectId,
