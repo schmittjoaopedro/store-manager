@@ -29,41 +29,53 @@
 					class="form-control input-sm" 
 					v-on:keyup="loadData" 
 					v-model="cpf">
-				<table class="table table-hover table-condensed">
-					<thead>
-						<tr>
-							<th>Nome</th>
-							<th>Celular</th>
-							<th>Telefone</th>
-							<th>CPF</th>
-							<th>Ações</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr v-for="c in clients">
-							<td>{{c.name}}</td>
-							<td>{{c.phoneOne}}</td>
-							<td>{{c.phoneTwo}}</td>
-							<td>{{c.cpf}}</td>
-							<td>
-								<button type="button" 
-									class="btn btn-primary btn-sm" 
-									v-on:click="edit(c)">
-										<span class="glyphicon glyphicon-pencil"></span>
-								</button>
-								<button type="button" 
-									class="btn btn-danger btn-sm" 
-									v-on:click="remove(c)">
-										<span class="glyphicon glyphicon-remove"></span>
-								</button>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="client-table-container">	
+					<table class="table table-hover table-condensed">
+						<thead>
+							<tr>
+								<th>Nome</th>
+								<th>Celular</th>
+								<th>Telefone</th>
+								<th>CPF</th>
+								<th>Ações</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="c in clients">
+								<td>{{c.name}}</td>
+								<td>{{c.phoneOne}}</td>
+								<td>{{c.phoneTwo}}</td>
+								<td>{{c.cpf}}</td>
+								<td>
+									<button type="button" 
+										class="btn btn-primary btn-sm" 
+										v-on:click="edit(c)">
+											<span class="glyphicon glyphicon-pencil"></span>
+									</button>
+									<button type="button" 
+										class="btn btn-danger btn-sm" 
+										v-on:click="remove(c)">
+											<span class="glyphicon glyphicon-remove"></span>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 				<ul class="pagination pagination-sm">
+				 	<li>
+				      <a href="#" aria-label="Previous" v-on:click="previous()">
+				        <span aria-hidden="true">&laquo;</span>
+				      </a>
+				    </li>
 					<li v-for="p in pages">
-						<a href="#" v-on:click="pagination(p)">{{p}}</a>
+						<a href="#" v-on:click="middle(p)">{{p}}</a>
 					</li>
+					<li>
+				      <a href="#" aria-label="Next" v-on:click="next()">
+				        <span aria-hidden="true">&raquo;</span>
+				      </a>
+				    </li>
 				</ul>
 			</div>
 

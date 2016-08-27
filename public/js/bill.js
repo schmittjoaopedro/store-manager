@@ -11,7 +11,11 @@ var scope = new Vue({
 		page: 0,
 		name: null,
 		cpf: null,
-		parcellCount: 1
+		parcellCount: 1,
+		parcellDateStart: null,
+		msgAmount: '',
+		msgParcelAmount: '',
+		msgDateAmount: ''
 	},
 	methods: {
 		new: function() {
@@ -21,6 +25,7 @@ var scope = new Vue({
 			this.bill = {
 				purchaseDate: moment(new Date()).format("YYYY-MM-DD")
 			};
+			this.parcellDateStart = moment(new Date()).format("YYYY-MM-DD");
 		},
 		back: function() {
 			this.register = false;
@@ -82,15 +87,24 @@ var scope = new Vue({
 		},
 		generateParcels: function() {
 			var value = this.bill.amount / this.parcellCount;
+			var sum = 0;
 			this.parcels = [];
 			this.bill.parcels = this.parcels;
 			for(var i = 0; i < this.parcellCount; i++) {
+				var temp = parseFloat(value.toFixed(2));
+				if(i === this.parcellCount - 1) {
+					temp = parseFloat((this.bill.amount - sum).toFixed(2));
+				} else {
+					sum += temp;
+				}
 				this.bill.parcels.push({
-					value: value,
-					paymentDate: moment().add(i, 'month').format('YYYY-MM-DD'),
+					value: temp,
+					paymentDate: moment(this.parcellDateStart).add(i, 'month').format('YYYY-MM-DD'),
 					payed: false
 				});
 			}
+			this.validValueParcels();
+			this.validDateParcels();
 		},
 		edit: function(entity) {
 			this.register = true;
@@ -98,6 +112,41 @@ var scope = new Vue({
 			this.bill = JSON.parse(JSON.stringify(entity));
 			this.parcels = this.bill.parcels;
 			this.bill.purchaseDate = moment(entity.purchaseDate, "DD/MM/AAAA").format("YYYY-MM-DD");
+		},
+		//Validations
+		validAmount: function() {
+			if(!this.bill.amount) {
+				this.msgAmount = 'Campo obrigatório';
+				return false;
+			} else if(!(new RegExp(/^[1-9]\d*(\.\d+)?$/)).test("" + this.bill.amount)) {
+				this.msgAmount = "Somente valores numéricos, use '.' (ponto) para as casas decimais se necessário."
+				return false;
+			}
+			this.msgAmount = null;
+			return true;
+		},
+		validValueParcels: function() {
+			for(var idx in this.parcels) {
+				if(!this.parcels[idx].value) {
+					this.msgParcelAmount = 'Os valores são obrigatórios';
+					return false;
+				} else if(!(new RegExp(/^[1-9]\d*(\.\d+)?$/)).test("" + this.parcels[idx].value)) {
+					this.msgParcelAmount = "Somente valores numéricos, use '.' (ponto) para as casas decimais se necessário."
+					return false;
+				}
+			}
+			this.msgParcelAmount = null;
+			return true;
+		},
+		validDateParcels: function() {
+			for(var idx in this.parcels) {
+				if(!this.parcels[idx].paymentDate) {
+					this.msgDateAmount = 'As data são obrigatórias';
+					return false;
+				}
+			}
+			this.msgDateAmount = null;
+			return true;
 		}
 	}
 });

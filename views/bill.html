@@ -9,10 +9,10 @@
 			<%- include('header-bar.html') -%>
 			<h2>Vendas</h2>
 			<button type="button" class="btn btn-default btn-sm" v-on:click="new" ><span class="glyphicon glyphicon-plus"></span></button>
-			<div v-if="register">
+			<div v-show="register">
 				<%- include('bill-register.html') -%>
 			</div>
-			<div v-if="!register">
+			<div v-show="!register">
 				<%- include('bill-list.html') -%>
 			</div>
 		</div>
