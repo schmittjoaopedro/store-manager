@@ -7,7 +7,8 @@ var scope = new Vue({
 		pages: 0,
 		page: 0,
 		name: null,
-		cpf: null
+		cpf: null,
+		formPrepared: false
 	},
 	methods: {
 		new: function(event) {
