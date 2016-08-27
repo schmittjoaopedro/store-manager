@@ -41,3 +41,7 @@
 	color: red;
 	height: 20px;
 }
+
+.bill-table-container {
+	min-height: 230px;
+}

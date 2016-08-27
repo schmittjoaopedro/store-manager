@@ -9,6 +9,9 @@ var scope = new Vue({
 		clientView: false,
 		pages: 0,
 		page: 0,
+		count: null,
+		visiblePage: 5,
+		currentPage: 1,
 		name: null,
 		cpf: null,
 		parcellCount: 1,
@@ -31,11 +34,38 @@ var scope = new Vue({
 			this.register = false;
 			this.bill = {};
 		},
+		next: function() {
+			this.currentPage++;
+			var totalPages = parseInt(this.count / this.visiblePage) + 1;
+			if(this.currentPage > totalPages) this.currentPage = totalPages;
+			this.fitPages();
+		},
+		middle: function(idx) {
+			this.page = idx;
+			this.findClients();
+		},
+		previous: function() {
+			this.currentPage--;
+			if(this.currentPage < 1) this.currentPage = 1;
+			this.fitPages();
+		},
+		fitPages: function() {
+			this.pages = [];
+			if(this.currentPage * this.visiblePage <= this.count) {
+				for(var i = (this.currentPage - 1) * this.visiblePage; 
+					i < (this.currentPage * this.visiblePage);
+					this.pages.push(i), i++);
+			} else {
+				for(var i = (this.currentPage - 1) * this.visiblePage; 
+					i <= this.count;
+					this.pages.push(i), i++);
+			}
+		},
 		findClients: function() {
 			this.clientView = true;
 			$.get('/clients/list', { 
 				page: this.page, 
-				limit: 20, 
+				limit: 5, 
 				name: this.name, 
 				cpf: this.cpf 
 			}).done(function (resp) {
@@ -45,8 +75,9 @@ var scope = new Vue({
 							item.bornDate = moment(new Date(item.bornDate)).format("YYYY-MM-DD");
 					});
 					scope.clients = resp.data;
-					scope.pages = [];
-					for(var i = -1; i < parseInt((resp.total - 1) / 20); i++, scope.pages.push(i));
+					scope.count = parseInt((resp.total - 1) / 5);
+					scope.page = 0;
+					scope.fitPages();
 				}
 			});
 		},
