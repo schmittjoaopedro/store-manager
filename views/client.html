@@ -5,12 +5,12 @@
 		<link rel="stylesheet" type="text/css" href="/css/client.css">
 	</head>
 	<body>
-		<div id="clients">
+		<div id="clients" v-cloak>
 			<%- include('header-bar.html') -%>
 
 			<div v-if="!register" class="form-inline">
 				<h2>Clientes</h2>
-				<button type="button" class="btn btn-default btn-sm" v-on:click="new">Novo</button>
+				<button type="button" class="btn btn-default btn-sm" v-on:click="new"><span class="glyphicon glyphicon-plus"></span></button>
 				<span class="client-space"></span>
 				<label>Nome:</label>
 				<input type="text" name="name" class="form-control input-sm" v-on:keyup="loadData" v-model="name">
@@ -33,8 +33,8 @@
 							<td>{{c.phoneTwo}}</td>
 							<td>{{c.cpf}}</td>
 							<td>
-								<button type="button" class="btn btn-primary btn-sm" v-on:click="edit(c)">Editar</button>
-								<button type="button" class="btn btn-danger btn-sm" v-on:click="remove(c)">Apagar</button>
+								<button type="button" class="btn btn-primary btn-sm" v-on:click="edit(c)"><span class="glyphicon glyphicon-pencil"></span></button>
+								<button type="button" class="btn btn-danger btn-sm" v-on:click="remove(c)"><span class="glyphicon glyphicon-remove"></span></button>
 							</td>
 						</tr>
 					</tbody>
@@ -46,7 +46,7 @@
 
 			<div v-if="register">
 				<h2>Cadastro de cliente</h2>
-				<button type="button" class="btn btn-default btn-sm" v-on:click="back">Voltar</button>
+				<button type="button" class="btn btn-default btn-sm" v-on:click="back"><span class="glyphicon glyphicon-chevron-left"></span></button>
 				<hr />
 				<div class="form-inline client-form">
 					<div>
@@ -99,7 +99,7 @@
 						<input type="text" name="email" class="form-control input-sm" v-model="client.email">
 					</div>
 					<br />
-					<button type="button" class="btn btn-success btn-sm" v-on:click="save">Salvar</button>
+					<button type="button" class="btn btn-success btn-sm" v-on:click="save"><span class="glyphicon glyphicon-floppy-disk"></span></button>
 				</div>
 			</div>
 

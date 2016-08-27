@@ -1,0 +1,23 @@
+<h4>Ordens abertas</h4>
+<table class="table table-hover table-condensed">
+	<thead>
+		<tr>
+			<th>Valor</th>
+			<th>Data</th>
+			<th>Client</th>
+			<th>CPF</th>
+			<th>Ações</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr v-for="b in bills">
+			<td>{{b.amount}}</td>
+			<td>{{b.purchaseDate}}</td>
+			<td>{{b.client.name}}</td>
+			<td>{{b.client.cpf}}</td>
+			<td>
+				<button type="button" class="btn btn-primary btn-sm" v-on:click="edit(b)"><span class="glyphicon glyphicon-pencil"></span></button>
+			</td>
+		</tr>
+	</tbody>
+</table>

@@ -14,3 +14,20 @@
 	width: 100px;
 	display:inline-block;
 }
+
+.bill-parcels input[type='text'] {
+	width: 200px !important;
+}
+
+.bill-parcels input[type='date'] {
+	width: 200px !important;
+}
+
+.bill-parcels input[type='checkbox'] {
+	width: 30px !important;
+	margin: 0px 0px 0px 0px;
+}
+
+.bill-parcels table {
+	width: 50%;
+}

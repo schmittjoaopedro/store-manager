@@ -52,19 +52,6 @@ router.get('/list', isAuthenticated, function(req, res) {
 	});
 });
 
-router.get('/find', isAuthenticated, function(req, res) {
-	var name = req.query.name;
-	var filter = {};
-	if(name) {
-		filter.name = new RegExp(name, "i");
-	}
-	models.Client.find(filter).then(function(clients) {
-		res.json(clients);
-	}).catch(function(err) {
-		res.send(err);
-	})
-});
-
 router.delete('/:id', isAuthenticated, function(req, res) {
 	var id = req.params.id;
 	models.Client.findById(id).then(function(client) {

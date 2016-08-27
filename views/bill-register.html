@@ -1,33 +1,63 @@
 <h4>Cadastro de venda</h4>
-<button type="button" class="btn btn-default btn-sm" v-on:click="back">Cancelar</button>
+<button type="button" class="btn btn-default btn-sm" v-on:click="back"><span class="glyphicon glyphicon-chevron-left"></span></button>
 <hr />
 <div class="form-inline">
 	<span v-if="!clientView">
 		<span style="width: 150px; display:inline-block;">
-			<button type="button" class="btn btn-default btn-sm" v-on:click="findClients" >Buscar cliente</button>
+			<button type="button" class="btn btn-default btn-sm" v-on:click="findClients" ><span class="glyphicon glyphicon-search"></span></button>
 		</span>	
-		<label style="width: 450px;">Cliente: {{client.name}}</label>
+		<label style="width: 450px;">Cliente: {{bill.client.name}}</label>
 	</span>
 	<div v-if="clientView">
 		<%- include('bill-client.html') -%>
 	</div>
 </div>	
 <div class="form-inline bill-form">
-		<br />
-		<div>
-			<label>Valor</label>
-			<input type="text" class="form-control input-sm" v-model="bill.amount">
-		</div>
-		<br />
+	<div>
 		<div>
 			<label>Data de compra</label>
-			<input type="date" class="form-control input-sm" v-model="bill.puchaseDate">
+			<input type="date" class="form-control input-sm" v-model="bill.purchaseDate">
 		</div>
 		<br />
 		<div>
 			<label>Descrição</label>
 			<textarea rows="10" cols="55" class="form-control input-sm" v-model="bill.notes"></textarea>
 		</div>
-		<button type="button" class="btn btn-success btn-sm" v-on:click="save">Salvar</button>
+		<br />
+		<div>
+			<label>Valor</label>
+			<input type="text" class="form-control input-sm" v-model="bill.amount">
+		</div>
+		<br />
+		<div v-if="!bill.id">
+			<label>Parcelas</label>
+			<input type="text" class="form-control input-sm" v-model="parcellCount">
+			<button type="button" class="btn btn-success btn-sm" v-on:click="generateParcels"><span class="glyphicon glyphicon-ok"></span></button>
+		</div>		
 	</div>
 </div>
+<div class="bill-parcels">
+	<table class="table table-hover table-condensed">
+		<thead>
+			<tr>
+				<th>Valor</th>
+				<th>Data de pagamento</th>
+				<th>Pago</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr v-for="p in parcels">
+				<td>
+					<input type="text" class="form-control input-sm" v-model="p.value">
+				</td>
+				<td>
+					<input type="date" class="form-control input-sm" v-model="p.paymentDate">
+				</td>
+				<td>
+					<input type="checkbox" class="form-control input-sm" v-model="p.payed">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<button type="button" class="btn btn-success btn-sm" v-on:click="save"><span class="glyphicon glyphicon-floppy-disk"></span></button>

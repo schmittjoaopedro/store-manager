@@ -3,12 +3,9 @@ var mongoose = require("mongoose"),
 
 var billSchema = Schema({
     amount: Number,
-    puchaseDate: Number,
+    purchaseDate: Number,
     notes: String,
-    parcels: [{
-    	type: Schema.Types.ObjectId,
-    	ref: 'Parcel'
-    }],
+    parcels: ['Parcel'],
     client: {
         type: Schema.Types.ObjectId,
         ref: 'Client'
