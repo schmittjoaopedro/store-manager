@@ -1,9 +1,5 @@
 .client-form {
-	max-width: 50%;
-}
-
-.client-form label {
-	width: 150px;
+	max-width: 100%;
 }
 
 .client-form input {
@@ -13,4 +9,14 @@
 .client-space {
 	width: 100px;
 	display:inline-block;
+}
+
+.client-error {
+	width: 100%;
+	color: red;
+	height: 20px;
+}
+
+.client-form-label {
+	width: 150px;
 }

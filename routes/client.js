@@ -37,7 +37,7 @@ router.get('/list', isAuthenticated, function(req, res) {
 	var cpf = req.query.cpf;
 	var filter = {};
 	if(name) filter.name = new RegExp(name, "i");
-	if(cpf) filter.cpf = cpf;
+	if(cpf) filter.cpf = new RegExp(cpf, "i");;
 	models.Client.find(filter).limit(limit).skip(skip * limit).then(function (clients) {
 		models.Client.count().then(function(count) {
 			res.json({
