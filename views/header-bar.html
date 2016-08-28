@@ -23,9 +23,9 @@
       <ul class="nav navbar-nav navbar-right">
           <% if(user) { %>
             <li><a href="#"> Bem vindo <%= user.username %></a></li>
-            <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span></a></li>
+            <li><a href="/logout">Sair&nbsp&nbsp<span class="glyphicon glyphicon-log-out"></span></a></li>
           <% } else { %>
-            <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span></a></li>
+            <li><a href="/login">Login&nbsp&nbsp<span class="glyphicon glyphicon-log-in"></span></a></li>
           <% } %>
       </ul>
     </div><!-- /.navbar-collapse -->
