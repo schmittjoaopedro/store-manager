@@ -70,6 +70,7 @@ router.get('/list/open', isAuthenticated, function(req, res) {
 			.find(filter)
 			.limit(limit)
 			.skip(skip * limit)
+			.sort('purchaseDate')
 			.populate('client')
 			.then(function(bills) {
 				models.Bill
@@ -94,6 +95,7 @@ router.get('/list/open', isAuthenticated, function(req, res) {
 		.find(filter)
 		.limit(limit)
 		.skip(skip * limit)
+		.sort('purchaseDate')
 		.populate('client')
 		.then(function(bills) {
 			models.Bill

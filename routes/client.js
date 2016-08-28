@@ -47,6 +47,7 @@ router.get('/list', isAuthenticated, function(req, res) {
 	.find(filter)
 	.limit(limit)
 	.skip(skip * limit)
+	.sort('name')
 	.then(function (clients) {
 		models.Client
 		.count()

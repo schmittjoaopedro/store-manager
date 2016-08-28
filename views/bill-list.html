@@ -12,37 +12,39 @@
 		v-on:keyup="loadData" 
 		v-model="billCpf">
 </div>
-<table class="table table-hover table-condensed">
-	<thead>
-		<tr>
-			<th>Valor</th>
-			<th>Data</th>
-			<th>Client</th>
-			<th>CPF</th>
-			<th>Ações</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr v-for="b in bills">
-			<td>{{b.amount}}</td>
-			<td>{{b.purchaseDate}}</td>
-			<td>{{b.client.name}}</td>
-			<td>{{b.client.cpf}}</td>
-			<td>
-				<button type="button" 
-					class="btn btn-primary btn-sm" 
-					v-on:click="edit(b)">
-						<span class="glyphicon glyphicon-pencil"></span>
-				</button>
-				<button type="button" 
-					class="btn btn-danger btn-sm" 
-					v-on:click="remove(b)">
-						<span class="glyphicon glyphicon-remove"></span>
-				</button>
-			</td>
-		</tr>
-	</tbody>
-</table>
+<div class="table-responsive">
+	<table class="table table-hover table-condensed">
+		<thead>
+			<tr>
+				<th>Valor</th>
+				<th>Data</th>
+				<th>Client</th>
+				<th>CPF</th>
+				<th>Ações</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr v-for="b in bills">
+				<td>{{b.amount}}</td>
+				<td>{{b.purchaseDate}}</td>
+				<td>{{b.client.name}}</td>
+				<td>{{b.client.cpf}}</td>
+				<td>
+					<button type="button" 
+						class="btn btn-primary btn-sm" 
+						v-on:click="edit(b)">
+							<span class="glyphicon glyphicon-pencil"></span>
+					</button>
+					<button type="button" 
+						class="btn btn-danger btn-sm" 
+						v-on:click="remove(b)">
+							<span class="glyphicon glyphicon-remove"></span>
+					</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
 <ul class="pagination pagination-sm">
  	<li>
       <a href="#" aria-label="Previous" v-on:click="billPrevious()">
