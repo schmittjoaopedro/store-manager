@@ -8,7 +8,11 @@
 		<div id="bill" v-cloak>
 			<%- include('header-bar.html') -%>
 			<h2>Vendas</h2>
-			<button type="button" class="btn btn-default btn-sm" v-on:click="new" ><span class="glyphicon glyphicon-plus"></span></button>
+			<button type="button" 
+				class="btn btn-default btn-sm" 
+				v-on:click="new" >
+					<span class="glyphicon glyphicon-plus"></span>
+			</button>
 			<div v-show="register">
 				<%- include('bill-register.html') -%>
 			</div>

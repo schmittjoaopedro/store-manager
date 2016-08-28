@@ -1,4 +1,17 @@
 <h4>Ordens abertas</h4>
+<div class="form-inline">
+	<label>Nome:</label>
+	<input type="text" 
+		class="form-control input-sm" 
+		v-on:keyup="loadData" 
+		v-model="billName"
+		style="text-transform: uppercase">
+	<label>CPF:</label>
+	<input type="text" 
+		class="form-control input-sm" 
+		v-on:keyup="loadData" 
+		v-model="billCpf">
+</div>
 <table class="table table-hover table-condensed">
 	<thead>
 		<tr>
@@ -16,8 +29,32 @@
 			<td>{{b.client.name}}</td>
 			<td>{{b.client.cpf}}</td>
 			<td>
-				<button type="button" class="btn btn-primary btn-sm" v-on:click="edit(b)"><span class="glyphicon glyphicon-pencil"></span></button>
+				<button type="button" 
+					class="btn btn-primary btn-sm" 
+					v-on:click="edit(b)">
+						<span class="glyphicon glyphicon-pencil"></span>
+				</button>
+				<button type="button" 
+					class="btn btn-danger btn-sm" 
+					v-on:click="remove(b)">
+						<span class="glyphicon glyphicon-remove"></span>
+				</button>
 			</td>
 		</tr>
 	</tbody>
 </table>
+<ul class="pagination pagination-sm">
+ 	<li>
+      <a href="#" aria-label="Previous" v-on:click="billPrevious()">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+	<li v-for="p in billPages">
+		<a href="#" v-on:click="billMiddle(p)">{{p}}</a>
+	</li>
+	<li>
+      <a href="#" aria-label="Next" v-on:click="billNext()">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+</ul>

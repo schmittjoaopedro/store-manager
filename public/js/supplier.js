@@ -1,59 +1,57 @@
 var scope = new Vue({
-	el: '#clients',
+	el: '#supplier',
 	data: {
-		clients: [],
 		register: false,
-		client: {},
+		supplier: {},
+		suppliers: [],
+		msgName: '',
+		msgCnpj: '',
+		msgCountry: '',
+		msgState: '',
+		msgCity: '',
+		msgPhoneOne: '',
+		msgPhoneTwo: '',
+		msgEmail: '',
+		msgSite: '',
+		name: '',
+		cnpj: '',
 		pages: 0,
 		page: 0,
 		count: null,
 		visiblePage: 5,
-		currentPage: 1,
-		name: null,
-		cpf: null,
-		msgName: '',
-		msgCpf: '',
-		msgDate: '',
-		msgCountry: '',
-		msgState: '',
-		msgCity: '',
-		msgAddress: '',
-		msgPhoneOne: '',
-		msgPhoneTwo: '',
-		msgEmail: ''
+		currentPage: 1
 	},
 	methods: {
-		new: function(event) {
-			this.client = {};
-			this.register = true;
-		},
-		back: function(event) {
+		back: function() {
+			this.supplier = {};
 			this.register = false;
 		},
-		save: function(event) {
+		new: function() {
+			this.supplier = {};
+			this.register = true;
+		},
+		save: function() {
 			if(!this.validFields()) return;
-			if(this.client.bornDate)
-				this.client.bornDate = moment(this.client.bornDate, "YYYY-MM-DD").toDate().getTime();
-			$.post('/clients', this.client,'json').done(function (response) {
-				alert("Cliente cadastrado com sucesso!");
+			$.post('/suppliers', this.supplier, 'json').done(function(resp) {
+				alert("Fornecedor cadastrado com sucesso!");
 				scope.register = false;
-				scope.client = {};
+				scope.supplier = {};
 				scope.loadData();
 			});
 		},
-		remove: function(client) {
+		remove: function(supplier) {
 			$.ajax({
-				url: '/clients/' + client.id,
+				url: '/suppliers/' + supplier.id,
 				method: 'DELETE'
 			}).done(function() {
-				alert("Client removido com sucesso!");
+				alert("Fornecedor removido com sucesso!");
 				scope.register = false;
-				scope.client = {};
+				scope.supplier = {};
 				scope.loadData();
 			})
 		},
-		edit: function(client) {
-			this.client = client;
+		edit: function(supplier) {
+			this.supplier = supplier;
 			this.register = true;
 		},
 		next: function() {
@@ -83,85 +81,67 @@ var scope = new Vue({
 					this.pages.push(i), i++);
 			}
 		},
-		loadData: function loadData() {
-			$.get('/clients/list', { 
+		loadData: function() {
+			$.get('/suppliers/list', {
 				page: this.page, 
 				limit: 10, 
 				name: this.name, 
-				cpf: this.cpf 
-			}).done(function (resp) {
+				cnpj: this.cnpj 
+			}).done(function(resp) {
 				if(resp.data) {
 					resp.data.forEach(function(item) {
 						if(item.bornDate)
 							item.bornDate = moment(new Date(item.bornDate)).format("YYYY-MM-DD");
 					});
-					scope.clients = resp.data;
+					scope.suppliers = resp.data;
 					scope.count = parseInt((resp.total - 1) / 10);
 					scope.page = 0;
 					scope.fitPages();
 				}
-			});
+			})
 		},
 		//Validations
 		validFields: function() {
 			var state = this.validName();
-			state &= this.validCpf();
-			state &= this.validDate();
+			state &= this.validCnpj();
 			state &= this.validCountry();
 			state &= this.validState();
 			state &= this.validCity();
-			state &= this.validAddress();
 			state &= this.validPhoneOne();
 			state &= this.validPhoneTwo();
 			state &= this.validEmail();
+			state &= this.validSite();
 			return state;
 		},
 		validName: function() {
-			if(!this.client.name) {
+			if(!this.supplier.name) {
 				this.msgName = "Campo obrigatório!";
 				return false;
-			} else if(!(new RegExp(/^[a-zA-Z ]+$/)).test(this.client.name)) {
-				this.msgName= "Nome inválido, use somente letras sem acentos!";
+			} else if(!(new RegExp(/^[A-Z0-9 _]*[A-Z0-9][A-Z0-9 _]*$/)).test(this.supplier.name)) {
+				this.msgName= "Nome inválido, não utilize acentos!";
 				return false;
 			}
 			this.msgName = null;
 			return true;
 		},
-		validCpf: function() {
-			if(!this.client.cpf) {
-				this.msgCpf = "Campo obrigatório!";
-				return false;
-			} else if(!(new RegExp(/^[0-9][0-9][0-9].[0-9][0-9][0-9].[0-9][0-9][0-9]-[0-9][0-9]$/)).test(this.client.cpf)) {
-				this.msgCpf = "CPF inválido!";
+		validCnpj: function() {
+			if(this.supplier.cnpj && !(new RegExp(/^[0-9][0-9].[0-9][0-9][0-9].[0-9][0-9][0-9]\/[0-9][0-9][0-9][0-9]\-[0-9][0-9]$/)).test(this.supplier.cnpj)) {
+				this.msgCnpj = "CNPJ inválido."
 				return false;
 			}
-			this.msgCpf = null;
-			return true;
-		},
-		validDate: function() {
-			if(!this.client.bornDate) {
-				this.msgDate = "Campo obrigatório!";
-				return false;
-			}
-			this.msgDate = null;
+			this.msgCnpj = null;
 			return true;
 		},
 		validCountry: function() {
-			if(!this.client.country) {
-				this.msgCountry = "Campo obrigatório!";
-				return false;
-			} else if(!(new RegExp(/^[a-zA-Z ]+$/)).test(this.client.country)) {
-				this.msgCountry= "Nome inválido, use somente letras sem acentos!";
+			if(this.supplier.country && !(new RegExp(/^[a-zA-Z ]+$/)).test(this.supplier.country)) {
+				this.msgCountry = "Nome inválido, use somente letras sem acentos!";
 				return false;
 			}
 			this.msgCountry = null;
 			return true;
 		},
 		validState: function() {
-			if(!this.client.state) {
-				this.msgState = "Campo obrigatório!";
-				return false;
-			} else if(!(new RegExp(/^[A-Z][A-Z]$/)).test(this.client.state)) {
+			if(this.supplier.state && !(new RegExp(/^[A-Z][A-Z]$/)).test(this.supplier.state)) {
 				this.msgState = "Estado inválido, use somente acrônimos, ex: SC, RS, SP, PR!";
 				return false;
 			}
@@ -169,26 +149,15 @@ var scope = new Vue({
 			return true;
 		},
 		validCity: function() {
-			if(!this.client.city) {
-				this.msgCity = "Campo obrigatório!";
-				return false;
-			} else if(!(new RegExp(/^[a-zA-Z ]+$/)).test(this.client.city)) {
+			if(this.supplier.city && !(new RegExp(/^[a-zA-Z ]+$/)).test(this.supplier.city)) {
 				this.msgCity = "Nome inválido, use somente letras sem acentos!";
 				return false;
 			}
 			this.msgCity = null;
 			return true;
 		},
-		validAddress: function() {
-			if(!this.client.address) {
-				this.msgAddress = "Campo obrigatório!";
-				return false;
-			}
-			this.msgAddress = null;
-			return true;
-		},
 		validPhoneOne: function() {
-			if(this.client.phoneOne && !(new RegExp(/^\([0-9][0-9]\) [0-9][0-9][0-9][0-9]\-[0-9][0-9][0-9][0-9]$/)).test(this.client.phoneOne)) {
+			if(this.supplier.phoneOne && !(new RegExp(/^\([0-9][0-9]\) [0-9][0-9][0-9][0-9]\-[0-9][0-9][0-9][0-9]$/)).test(this.supplier.phoneOne)) {
 				this.msgPhoneOne = "Telefone inválido!";
 				return false;
 			}
@@ -196,15 +165,23 @@ var scope = new Vue({
 			return true;
 		},
 		validPhoneTwo: function() {
-			if(this.client.phoneTwo && !(new RegExp(/^\([0-9][0-9]\) [0-9][0-9][0-9][0-9]\-[0-9][0-9][0-9][0-9]$/)).test(this.client.phoneTwo)) {
+			if(this.supplier.phoneTwo && !(new RegExp(/^\([0-9][0-9]\) [0-9][0-9][0-9][0-9]\-[0-9][0-9][0-9][0-9]$/)).test(this.supplier.phoneTwo)) {
 				this.msgPhoneTwo = "Telefone inválido!";
 				return false;
 			}
 			this.msgPhoneTwo = null;
 			return true;
 		},
+		validSite: function() {
+			if(this.supplier.site && !(new RegExp(/[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/)).test(this.supplier.site)) {
+				this.msgSite = "Site inválido!";
+				return false;
+			}
+			this.msgSite = null;
+			return true;
+		},
 		validEmail: function() {
-			if(this.client.email && !(new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)).test(this.client.email)) {
+			if(this.supplier.email && !(new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)).test(this.supplier.email)) {
 				this.msgEmail = "Email inválido!";
 				return false;
 			}
@@ -213,5 +190,6 @@ var scope = new Vue({
 		}
 	}
 });
+
 
 scope.loadData();

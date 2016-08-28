@@ -2,21 +2,21 @@
 <html>
 	<head>
 		<%- include('header-imports.html') -%>
-		<link rel="stylesheet" type="text/css" href="/css/client.css">
+		<link rel="stylesheet" type="text/css" href="/css/supplier.css">
 	</head>
 	<body>
-		<div id="clients" v-cloak>
+		<div id="supplier" v-cloak>
 			<%- include('header-bar.html') -%>
 
 			<!-- TABLE LIST -->
 			<div v-show="!register" class="form-inline">
-				<h2>Clientes</h2>
+				<h2>Fornecedores</h2>
 				<button type="button" 
 					class="btn btn-default btn-sm" 
 					v-on:click="new">
 						<span class="glyphicon glyphicon-plus"></span>
 				</button>
-				<span class="client-space"></span>
+				<span class="supplier-space"></span>
 				<label>Nome:</label>
 				<input type="text" 
 					name="name" 
@@ -24,29 +24,29 @@
 					v-on:keyup="loadData" 
 					v-model="name"
 					style="text-transform: uppercase" >
-				<label>CPF:</label>
+				<label>CNPJ:</label>
 				<input type="text" 
-					name="cpf" 
+					name="cnpj" 
 					class="form-control input-sm" 
 					v-on:keyup="loadData" 
-					v-model="cpf">
-				<div class="client-table-container">	
+					v-model="cnpj">
+				<div class="supplier-table-container">	
 					<table class="table table-hover table-condensed">
 						<thead>
 							<tr>
 								<th>Nome</th>
 								<th>Celular</th>
 								<th>Telefone</th>
-								<th>CPF</th>
+								<th>CNPJ</th>
 								<th>Ações</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr v-for="c in clients">
+							<tr v-for="c in suppliers">
 								<td>{{c.name}}</td>
 								<td>{{c.phoneOne}}</td>
 								<td>{{c.phoneTwo}}</td>
-								<td>{{c.cpf}}</td>
+								<td>{{c.cnpj}}</td>
 								<td>
 									<button type="button" 
 										class="btn btn-primary btn-sm" 
@@ -79,111 +79,109 @@
 				    </li>
 				</ul>
 			</div>
-
 			<!-- REGISTER FORM -->
 			<div v-show="register">
-				<h2>Cadastro de cliente</h2>
+				<h2>Cadastro de fornecedor</h2>
 				<button type="button" 
 					class="btn btn-default btn-sm" 
 					v-on:click="back">
 						<span class="glyphicon glyphicon-chevron-left"></span>
 				</button>
 				<hr />
-				<div class="form-inline client-form">
+				<div class="form-inline supplier-form">
 					<div>
-						<label class="client-form-label">Nome</label>
+						<label class="supplier-form-label">Nome</label>
 						<input type="text" 
-							name="clientName" 
+							name="supplierName" 
 							class="form-control input-sm" 
-							v-model="client.name"
+							v-model="supplier.name"
 							v-on:blur="validName" 
 							style="text-transform: uppercase" />
-						<div class="client-error">{{msgName}}</div>
+						<div class="supplier-error">{{msgName}}</div>
 					</div>
 					<div>
-						<label class="client-form-label">CPF</label>
+						<label class="supplier-form-label">CNPJ</label>
 						<input type="text" 
-							name="clientCpf" 
+							name="supplierCnpj" 
 							class="form-control input-sm" 
-							v-on:blur="validCpf"
-							v-model="client.cpf">
-						<div class="client-error">{{msgCpf}}</div>
+							v-on:blur="validCnpj"
+							v-model="supplier.cnpj">
+						<div class="supplier-error">{{msgCnpj}}</div>
 					</div>
 					<div>
-						<label class="client-form-label">Data de nascimento</label>
-						<input type="date" 
-							name="clientBornDate" 
-							class="form-control input-sm" 
-							v-on:blur="validDate"
-							v-model="client.bornDate">
-						<div class="client-error">{{msgDate}}</div>
-					</div>
-					<div>
-						<label class="client-form-label">País</label>
+						<label class="supplier-form-label">País</label>
 						<input type="text" 
-							name="clientCountry" 
+							name="supplierCountry" 
 							class="form-control input-sm" 
 							v-on:blur="validCountry"
-							v-model="client.country"
+							v-model="supplier.country"
 							style="text-transform: uppercase">
-						<div class="client-error">{{msgCountry}}</div>
+						<div class="supplier-error">{{msgCountry}}</div>
 					</div>
 					<div>
-						<label class="client-form-label">Estado</label>
+						<label class="supplier-form-label">Estado</label>
 						<input type="text" 
-							name="clientState" 
+							name="supplierState" 
 							class="form-control input-sm" 
 							v-on:blur="validState"
-							v-model="client.state"
+							v-model="supplier.state"
 							style="text-transform: uppercase">
-						<div class="client-error">{{msgState}}</div>
+						<div class="supplier-error">{{msgState}}</div>
 					</div>
 					<div>
-						<label class="client-form-label">Cidade</label>
+						<label class="supplier-form-label">Cidade</label>
 						<input type="text" 
-							name="clientCity" 
+							name="supplierCity" 
 							class="form-control input-sm" 
 							v-on:blur="validCity"
-							v-model="client.city"
+							v-model="supplier.city"
 							style="text-transform: uppercase">
-						<div class="client-error">{{msgCity}}</div>
+						<div class="supplier-error">{{msgCity}}</div>
 					</div>
 					<div>
-						<label class="client-form-label">Endereço</label>
+						<label class="supplier-form-label">Endereço</label>
 						<input type="text" 
-							name="clientAddress" 
+							name="supplierAddress" 
 							class="form-control input-sm" 
-							v-on:blur="validAddress"
-							v-model="client.address"
+							v-model="supplier.address"
 							style="text-transform: uppercase">
-						<div class="client-error">{{msgAddress}}</div>
+						<div class="supplier-error"></div>
 					</div>
 					<div>
-						<label class="client-form-label">Telefone fixo</label>
+						<label class="supplier-form-label">Telefone fixo</label>
 						<input type="text" 
-							name="clientPhoneOne" 
+							name="supplierPhoneOne" 
 							class="form-control input-sm" 
 							v-on:blur="validPhoneOne"
-							v-model="client.phoneOne">
-						<div class="client-error">{{msgPhoneOne}}</div>
+							v-model="supplier.phoneOne">
+						<div class="supplier-error">{{msgPhoneOne}}</div>
 					</div>
 					<div>
-						<label class="client-form-label">Telefone celular</label>
+						<label class="supplier-form-label">Telefone celular</label>
 						<input type="text" 
-							name="clientPhoneTwo" 
+							name="supplierPhoneTwo" 
 							v-on:blur="validPhoneTwo"
 							class="form-control input-sm" 
-							v-model="client.phoneTwo">
-						<div class="client-error">{{msgPhoneTwo}}</div>
+							v-model="supplier.phoneTwo">
+						<div class="supplier-error">{{msgPhoneTwo}}</div>
 					</div>
 					<div>
-						<label class="client-form-label">Email</label>
+						<label class="supplier-form-label">Site</label>
 						<input type="text" 
-							name="clientEmail" 
+							name="supplierSite" 
+							v-on:blur="validSite"
+							class="form-control input-sm" 
+							v-model="supplier.site">
+						<div class="supplier-error">{{msgSite}}</div>
+					</div>
+					<div>
+						<label class="supplier-form-label">Email</label>
+						<input type="text" 
+							name="supplierEmail" 
 							v-on:blur="validEmail"
 							class="form-control input-sm" 
-							v-model="client.email">
-						<div class="client-error">{{msgEmail}}</div>
+							v-model="supplier.email">
+						<div class="supplier-error">{{msgEmail}}</div>
 					</div>
 					<br />
 					<button type="button" 
@@ -196,6 +194,6 @@
 		</div>
 	</body>
 	<script type="text/javascript" src="/lib/moment/moment.js"></script>
-	<script type="text/javascript" src="/js/client.js"></script>
-	<script type="text/javascript" src="/js/client.form.js"></script>
+	<script type="text/javascript" src="/js/supplier.js"></script>
+	<script type="text/javascript" src="/js/supplier.form.js"></script>
 </html>

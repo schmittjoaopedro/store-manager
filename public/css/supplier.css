@@ -1,0 +1,26 @@
+.supplier-form {
+	max-width: 100%;
+}
+
+.supplier-form input {
+	width: 300px !important;
+}
+
+.supplier-space {
+	width: 100px;
+	display:inline-block;
+}
+
+.supplier-error {
+	width: 100%;
+	color: red;
+	height: 20px;
+}
+
+.supplier-form-label {
+	width: 150px;
+}
+
+.supplier-table-container {
+	min-height: 430px;
+}

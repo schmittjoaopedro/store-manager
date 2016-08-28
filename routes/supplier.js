@@ -3,35 +3,35 @@ var router = require('express').Router();
 
 /* GET home page. */
 router.get('/', isAuthenticated, function(req, res) {
-    res.render('client', { title: 'Clientes', user: req.user });
+    res.render('supplier', { title: 'Fornecedores', user: req.user });
 });
 
-router.post('/', isAuthenticated, function(req, res) {
+router.post('/',isAuthenticated, function(req, res) {
 	var obj = req.body;
 	if(!obj.id) {
-		new models.Client(obj)
+		new models.Supplier(obj)
 		.save()
-		.then(function (client) {
-			res.json(client);
-		}).catch(function (err) {
+		.then(function(supplier) {
+			res.json(supplier);
+		}).catch(function(err) {
 			res.send(err);
 		});
 	} else {
 		delete obj.createdAt;
 		delete obj.updatedAt;
-		models.Client
+		models.Supplier
 		.findById(obj.id)
-		.then(function(client) {
-			client
+		.then(function(supplier) {
+			supplier
 			.update(obj)
-			.then(function(client) {
-				res.json(client);
-			}).catch(function (err) {
+			.then(function(supplier) {
+				res.json(supplier);
+			}).catch(function(err) {
 				res.send(err);
 			});
-		}).catch(function (err) {
+		}).catch(function(err) {
 			res.send(err);
-		});
+		})
 	}
 });
 
@@ -39,21 +39,21 @@ router.get('/list', isAuthenticated, function(req, res) {
 	var name = req.query.name;
 	var skip = parseInt(req.query.page);
 	var limit = parseInt(req.query.limit);
-	var cpf = req.query.cpf;
+	var cnpj = req.query.cnpj;
 	var filter = {};
 	if(name) filter.name = new RegExp(name, "i");
-	if(cpf) filter.cpf = new RegExp(cpf, "i");;
-	models.Client
+	if(cnpj) filter.cnpj = new RegExp(cnpj, "i");;
+	models.Supplier
 	.find(filter)
 	.limit(limit)
 	.skip(skip * limit)
-	.then(function (clients) {
-		models.Client
+	.then(function (suppliers) {
+		models.Supplier
 		.count()
 		.then(function(count) {
 			res.json({
 				total: count,
-				data: clients
+				data: suppliers
 			})
 		}).catch(function(err) {
 			res.send(err);
@@ -65,10 +65,10 @@ router.get('/list', isAuthenticated, function(req, res) {
 
 router.delete('/:id', isAuthenticated, function(req, res) {
 	var id = req.params.id;
-	models.Client
+	models.Supplier
 	.findById(id)
-	.then(function(client) {
-		client
+	.then(function(supplier) {
+		supplier
 		.remove()
 		.then(function() {
 			res.send("OK");

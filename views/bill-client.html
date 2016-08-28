@@ -1,8 +1,19 @@
-<button type="button" class="btn btn-default btn-sm" v-on:click="cancelClients" ><span class="glyphicon glyphicon-chevron-left"></span></button>
+<button type="button" 
+	class="btn btn-default btn-sm" 
+	v-on:click="cancelClients" >
+		<span class="glyphicon glyphicon-chevron-left"></span>
+</button>
 <label>Nome:</label>
-<input type="text" class="form-control input-sm" v-on:keyup="findClients" v-model="name">
+<input type="text" 
+	class="form-control input-sm" 
+	v-on:keyup="findClients" 
+	v-model="clientName"
+	style="text-transform: uppercase">
 <label>CPF:</label>
-<input type="text" class="form-control input-sm" v-on:keyup="findClients" v-model="cpf">
+<input type="text" 
+	class="form-control input-sm" 
+	v-on:keyup="findClients" 
+	v-model="clientCpf">
 <hr />
 <div class="bill-table-container">
 	<table class="table table-hover table-condensed">
@@ -26,15 +37,15 @@
 </div>
 <ul class="pagination pagination-sm">
  	<li>
-      <a href="#" aria-label="Previous" v-on:click="previous()">
+      <a href="#" aria-label="Previous" v-on:click="clientPrevious()">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
-	<li v-for="p in pages">
-		<a href="#" v-on:click="middle(p)">{{p}}</a>
+	<li v-for="p in clientPages">
+		<a href="#" v-on:click="clientMiddle(p)">{{p}}</a>
 	</li>
 	<li>
-      <a href="#" aria-label="Next" v-on:click="next()">
+      <a href="#" aria-label="Next" v-on:click="clientNext()">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>

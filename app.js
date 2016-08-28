@@ -46,6 +46,7 @@ global.isAuthenticated = function(req, res, next) {
 app.use('/', require('./routes/index'));
 app.use('/clients', require('./routes/client'));
 app.use('/bills', require('./routes/bill'));
+app.use('/suppliers', require('./routes/supplier'));
 
 // Init database and models
 database.init().then(function () {

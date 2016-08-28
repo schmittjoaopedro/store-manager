@@ -23,6 +23,13 @@
 <div class="form-inline bill-form">
 	<div>
 		<div>
+			<label>Descrição</label>
+			<textarea rows="10" cols="55" 
+				class="form-control input-sm bill-form-input" 
+				v-model="bill.notes"></textarea>
+		</div>
+		<br />		
+		<div>
 			<label>Data de compra</label>
 			<input type="date" 
 				class="form-control input-sm bill-form-input" 
@@ -30,10 +37,17 @@
 		</div>
 		<br />
 		<div>
-			<label>Descrição</label>
-			<textarea rows="10" cols="55" 
+			<label>Tipo de pagamento</label>
+			<select v-model="bill.paymentType" 
 				class="form-control input-sm bill-form-input" 
-				v-model="bill.notes"></textarea>
+				v-on:blur="validPaymentType">
+				<option>Credito</option>
+				<option>Debito</option>
+				<option>Dinheiro</option>
+				<option>Boleto</option>
+				<option>Cheque</option>
+			</select>
+			<div class="bill-error">{{msgPaymentType}}</div>
 		</div>
 		<br />
 		<div>
