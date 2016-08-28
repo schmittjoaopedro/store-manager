@@ -98,6 +98,7 @@ var scope = new Vue({
 					scope.clients = resp.data;
 					scope.count = parseInt((resp.total - 1) / 10);
 					scope.page = 0;
+					if(scope.currentPage > scope.count) scope.currentPage = 1;
 					scope.fitPages();
 				}
 			});

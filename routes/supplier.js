@@ -1,4 +1,3 @@
-var passport = require('passport');
 var router = require('express').Router();
 
 /* GET home page. */
@@ -50,7 +49,7 @@ router.get('/list', isAuthenticated, function(req, res) {
 	.sort('name')
 	.then(function (suppliers) {
 		models.Supplier
-		.count()
+		.count(filter)
 		.then(function(count) {
 			res.json({
 				total: count,

@@ -1,19 +1,19 @@
 <button type="button" 
 	class="btn btn-default btn-sm" 
-	v-on:click="cancelClients" >
+	v-on:click="cancelPurchases" >
 		<span class="glyphicon glyphicon-chevron-left"></span>
 </button>
 <label>Nome:</label>
 <input type="text" 
 	class="form-control input-sm" 
-	v-on:keyup="clientApplyFilter" 
-	v-model="clientName"
+	v-on:keyup="supplierApplyFilter" 
+	v-model="supplierName"
 	style="text-transform: uppercase">
-<label>CPF:</label>
+<label>CNPJ:</label>
 <input type="text" 
 	class="form-control input-sm" 
-	v-on:keyup="clientApplyFilter" 
-	v-model="clientCpf">
+	v-on:keyup="supplierApplyFilter" 
+	v-model="supplierCnpj">
 <hr />
 <div class="table-responsive">
 	<table class="table table-hover table-condensed">
@@ -21,35 +21,35 @@
 			<tr>
 				<th class="col-md-1">Seleção</th>
 				<th class="col-md-8">Nome</th>
-				<th class="col-md-3">CPF</th>
+				<th class="col-md-3">CNPJ</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr v-for="c in clients">
+			<tr v-for="s in suppliers">
 				<td style="width: 50px">
 					<button type="button" 
 						class="btn btn-primary btn-sm" 
-						v-on:click="selectClient(c)">
+						v-on:click="selectSupplier(s)">
 							<span class="glyphicon glyphicon-check"></span>
 					</button>
 				</td>
-				<td>{{c.name}}</td>
-				<td>{{c.cpf}}</td>
+				<td>{{s.name}}</td>
+				<td>{{s.cnpj}}</td>
 			</tr>
 		</tbody>
 	</table>
 </div>
 <ul class="pagination pagination-sm">
  	<li>
-      <a href="#" aria-label="Previous" v-on:click="clientPrevious()">
+      <a href="#" aria-label="Previous" v-on:click="supplierPrevious()">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
-	<li v-for="p in clientPages">
-		<a href="#" v-on:click="clientMiddle(p)">{{p}}</a>
+	<li v-for="p in supplierPages">
+		<a href="#" v-on:click="supplierMiddle(p)">{{p}}</a>
 	</li>
 	<li>
-      <a href="#" aria-label="Next" v-on:click="clientNext()">
+      <a href="#" aria-label="Next" v-on:click="supplierNext()">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>

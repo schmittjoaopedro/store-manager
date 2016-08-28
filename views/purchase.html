@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<%- include('header-imports.html') -%>
+		<link rel="stylesheet" type="text/css" href="/css/purchase.css">
+	</head>
+	<body>
+		<div id="purchase" v-cloak>
+			<%- include('header-bar.html') -%>
+			<h2>Compras</h2>
+			<button type="button" 
+				class="btn btn-default btn-sm" 
+				v-on:click="new" >
+					<span class="glyphicon glyphicon-plus"></span>
+			</button>
+			<div v-show="register">
+				<%- include('purchase-register.html') -%>
+			</div>
+			<div v-show="!register">
+				<%- include('purchase-list.html') -%>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="/lib/moment/moment.js"></script>
+	<script type="text/javascript" src="/js/purchase.js"></script>
+</html>

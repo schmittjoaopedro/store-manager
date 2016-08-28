@@ -1,4 +1,4 @@
-<h4>Cadastro de venda</h4>
+<h4>Cadastro de compra</h4>
 <button type="button" 
 	class="btn btn-default btn-sm" 
 	v-on:click="back">
@@ -6,40 +6,40 @@
 </button>
 <hr />
 <div class="form-inline">
-	<span v-if="!clientView">
+	<span v-if="!supplierView">
 		<span style="width: 150px; display:inline-block;">
 			<button type="button" 
 				class="btn btn-default btn-sm"
-				v-on:click="clientApplyFilter">
+				v-on:click="supplierApplyFilter">
 					<span class="glyphicon glyphicon-search"></span>
 			</button>
 		</span>	
-		<label style="width: 450px;">Cliente: {{bill.client.name}}</label>
+		<label style="width: 450px;">Fornecedor: {{purchase.supplier.name}}</label>
 	</span>
-	<div v-if="clientView">
-		<%- include('bill-client.html') -%>
+	<div v-if="supplierView">
+		<%- include('purchase-supplier.html') -%>
 	</div>
-</div>	
-<div class="form-inline bill-form">
+</div>
+<div class="form-inline purchase-form">
 	<div>
 		<div>
 			<label>Descrição</label>
 			<textarea rows="10" cols="55" 
-				class="form-control input-sm bill-form-input" 
-				v-model="bill.notes"></textarea>
+				class="form-control input-sm purchase-form-input" 
+				v-model="purchase.note"></textarea>
 		</div>
 		<br />
 		<div>
 			<label>Data de compra</label>
 			<input type="date" 
-				class="form-control input-sm bill-form-input" 
-				v-model="bill.purchaseDate">
+				class="form-control input-sm purchase-form-input" 
+				v-model="purchase.purchaseDate">
 		</div>
 		<br />
 		<div>
 			<label>Tipo de pagamento</label>
-			<select v-model="bill.paymentType" 
-				class="form-control input-sm bill-form-input" 
+			<select v-model="purchase.paymentType" 
+				class="form-control input-sm purchase-form-input" 
 				v-on:blur="validPaymentType">
 				<option>Credito</option>
 				<option>Debito</option>
@@ -47,34 +47,34 @@
 				<option>Boleto</option>
 				<option>Cheque</option>
 			</select>
-			<div class="bill-error">{{msgPaymentType}}</div>
+			<div class="purchase-error">{{msgPaymentType}}</div>
 		</div>
 		<div>
 			<label>Valor (R$)</label>
 			<input type="text" 
 				name="amount"
 				v-on:blur="validAmount"
-				class="form-control input-sm bill-form-input" 
-				v-model="bill.amount">
-			<div class="bill-error">{{msgAmount}}</div>
+				class="form-control input-sm purchase-form-input" 
+				v-model="purchase.amount">
+			<div class="purchase-error">{{msgAmount}}</div>
 		</div>
-		<div v-if="!bill.id">
+		<div v-if="!purchase.id">
 			<label>Parcelas</label>
 			<input type="text" 
-				class="form-control input-sm bill-form-input-params" 
+				class="form-control input-sm purchase-form-input-params" 
 				v-model="parcellCount">
 			<input type="date" 
-				class="form-control input-sm bill-form-input-params" 
+				class="form-control input-sm purchase-form-input-params" 
 				v-model="parcellDateStart">
 			<button type="button" 
 				class="btn btn-success btn-sm" 
 				v-on:click="generateParcels">
 					<span class="glyphicon glyphicon-ok"></span>
 			</button>
-		</div>		
+		</div>
 	</div>
 </div>
-<div class="bill-parcels">
+<div class="purchase-parcels">
 	<table class="table table-hover table-condensed">
 		<thead>
 			<tr>
@@ -105,8 +105,8 @@
 			</tr>
 		</tbody>
 	</table>
-	<div class="bill-error" v-show="msgParcelAmount">{{msgParcelAmount}}</div>
-	<div class="bill-error" v-show="msgDateAmount">{{msgDateAmount}}</div>
+	<div class="purchase-error" v-show="msgParcelAmount">{{msgParcelAmount}}</div>
+	<div class="purchase-error" v-show="msgDateAmount">{{msgDateAmount}}</div>
 </div>
 <br />
 <button type="button" 

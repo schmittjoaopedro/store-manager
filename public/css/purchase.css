@@ -1,0 +1,43 @@
+.purchase-form {
+	max-width: 50%;
+}
+
+.purchase-form label {
+	width: 150px;
+}
+
+.purchase-form-input {
+	width: 400px !important;
+}
+
+.purchase-form-input-params {
+	width: 180px !important;
+}
+
+.purchase-space {
+	width: 100px;
+	display:inline-block;
+}
+
+.purchase-parcels input[type='text'] {
+	width: 200px !important;
+}
+
+.purchase-parcels input[type='date'] {
+	width: 200px !important;
+}
+
+.purchase-parcels input[type='checkbox'] {
+	width: 30px !important;
+	margin: 0px 0px 0px 0px;
+}
+
+.purchase-parcels table {
+	width: 50%;
+}
+
+.purchase-error {
+	width: 100%;
+	color: red;
+	height: 20px;
+}

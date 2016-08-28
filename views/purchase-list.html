@@ -4,13 +4,13 @@
 	<input type="text" 
 		class="form-control input-sm" 
 		v-on:keyup="loadData" 
-		v-model="billName"
+		v-model="purchaseName"
 		style="text-transform: uppercase">
-	<label>CPF:</label>
+	<label>CNPJ:</label>
 	<input type="text" 
 		class="form-control input-sm" 
 		v-on:keyup="loadData" 
-		v-model="billCpf">
+		v-model="purchaseCnpj">
 </div>
 <div class="table-responsive">
 	<table class="table table-hover table-condensed">
@@ -18,26 +18,26 @@
 			<tr>
 				<th>Valor</th>
 				<th>Data</th>
-				<th>Cliente</th>
-				<th>CPF</th>
+				<th>Loja</th>
+				<th>CNPJ</th>
 				<th>Ações</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr v-for="b in bills">
-				<td>{{b.amount}}</td>
-				<td>{{b.purchaseDate}}</td>
-				<td>{{b.client.name}}</td>
-				<td>{{b.client.cpf}}</td>
+			<tr v-for="p in purchases">
+				<td>{{p.amount}}</td>
+				<td>{{p.purchaseDate}}</td>
+				<td>{{p.supplier.name}}</td>
+				<td>{{p.supplier.cnpj}}</td>
 				<td>
 					<button type="button" 
 						class="btn btn-primary btn-sm" 
-						v-on:click="edit(b)">
+						v-on:click="edit(p)">
 							<span class="glyphicon glyphicon-pencil"></span>
 					</button>
 					<button type="button" 
 						class="btn btn-danger btn-sm" 
-						v-on:click="remove(b)">
+						v-on:click="remove(p)">
 							<span class="glyphicon glyphicon-remove"></span>
 					</button>
 				</td>
@@ -45,18 +45,3 @@
 		</tbody>
 	</table>
 </div>
-<ul class="pagination pagination-sm">
- 	<li>
-      <a href="#" aria-label="Previous" v-on:click="billPrevious()">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-	<li v-for="p in billPages">
-		<a href="#" v-on:click="billMiddle(p)">{{p}}</a>
-	</li>
-	<li>
-      <a href="#" aria-label="Next" v-on:click="billNext()">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-</ul>

@@ -31,6 +31,7 @@ var scope = new Vue({
 			this.register = true;
 			this.parcellCount = 1;
 			this.parcels = [];
+			this.billPage = 0;
 			this.bill = {
 				purchaseDate: moment(new Date()).format("YYYY-MM-DD")
 			};
@@ -69,7 +70,6 @@ var scope = new Vue({
 			}
 		},
 		findClients: function() {
-			this.clientView = true;
 			$.get('/clients/list', { 
 				page: this.clientPage, 
 				limit: 5, 
@@ -83,10 +83,15 @@ var scope = new Vue({
 					});
 					scope.clients = resp.data;
 					scope.clientCount = parseInt((resp.total - 1) / 5);
-					scope.clientPage = 0;
 					scope.clientFitPages();
 				}
 			});
+		},
+		clientApplyFilter: function() {
+			this.clientView = true;
+			this.clientPage = 0;
+			this.clientCurrentPage = 1;
+			this.findClients();
 		},
 		//Filter and pagination client - end
 		selectClient: function(client) {
