@@ -21,6 +21,7 @@
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0",
     "cookie-session": "~2.0.0-alpha.1",
-    "moment": "2.14.1"
+    "moment": "2.14.1",
+    "exceljs": "~0.2.24"
   }
 }

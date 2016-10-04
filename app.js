@@ -48,6 +48,7 @@ app.use('/clients', require('./routes/client'));
 app.use('/bills', require('./routes/bill'));
 app.use('/suppliers', require('./routes/supplier'));
 app.use('/purchases', require('./routes/purchase'));
+app.use('/util', require('./routes/util'));
 
 // Init database and models
 database.init().then(function () {
