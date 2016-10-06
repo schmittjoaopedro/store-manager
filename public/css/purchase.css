@@ -1,3 +1,7 @@
+.bill-root {
+	min-width: 800px;
+}
+
 .purchase-form {
 	max-width: 50%;
 }
@@ -11,7 +15,7 @@
 }
 
 .purchase-form-input-params {
-	width: 180px !important;
+	width: 140px !important;
 }
 
 .purchase-space {

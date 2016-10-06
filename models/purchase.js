@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
 
 var purchaseSchema = Schema({
 	amount: Number,
+	payed: Number,
 	purchaseDate: Number,
 	note: String,
 	paymentType: {
@@ -13,7 +14,8 @@ var purchaseSchema = Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'Supplier'
 	},
-	parcels: ['Parcel']
+	parcels: ['Parcel'],
+	payments: ['Payment'],
 });
 
 module.exports = {

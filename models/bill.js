@@ -3,9 +3,11 @@ var mongoose = require("mongoose"),
 
 var billSchema = Schema({
     amount: Number,
+    received: Number,
     purchaseDate: Number,
     notes: String,
     parcels: ['Parcel'],
+    payments: ['Payment'],
     paymentType: {
         type: String,
         enum: ['Credito','Debito','Dinheiro','Boleto','Cheque']

@@ -49,30 +49,32 @@
 			</select>
 			<div class="purchase-error">{{msgPaymentType}}</div>
 		</div>
-		<div>
-			<label>Valor (R$)</label>
-			<input type="text" 
-				name="amount"
-				v-on:blur="validAmount"
-				class="form-control input-sm purchase-form-input" 
-				v-model="purchase.amount">
-			<div class="purchase-error">{{msgAmount}}</div>
-		</div>
-		<div v-if="!purchase.id">
-			<label>Parcelas</label>
-			<input type="text" 
-				class="form-control input-sm purchase-form-input-params" 
-				v-model="parcellCount">
-			<input type="date" 
-				class="form-control input-sm purchase-form-input-params" 
-				v-model="parcellDateStart">
-			<button type="button" 
-				class="btn btn-success btn-sm" 
-				v-on:click="generateParcels">
-					<span class="glyphicon glyphicon-ok"></span>
-			</button>
-		</div>
 	</div>
+</div>
+<hr />
+<div class="form-inline purchase-form">
+	<b>Valor:</b>
+	<input type="number" 
+		name="amount"
+		v-on:blur="validAmount"
+		class="form-control input-sm purchase-form-input-params" 
+		v-model="purchase.amount">
+	<span v-if="!purchase.id">
+		<b>Parcelas:</b>
+		<input type="number" 
+			class="form-control input-sm purchase-form-input-params" 
+			v-model="parcellCount">
+		<b>Data:</b>
+		<input type="date" 
+			class="form-control input-sm purchase-form-input-params" 
+			v-model="parcellDateStart">
+		<button type="button" 
+			class="btn btn-success btn-sm" 
+			v-on:click="generateParcels">
+				<span class="glyphicon glyphicon-ok"></span>
+		</button>
+	</span>
+	<div class="purchase-error">{{msgAmount}}</div>
 </div>
 <div class="purchase-parcels">
 	<table class="table table-hover table-condensed">
@@ -80,6 +82,7 @@
 			<tr>
 				<th>Valor (R$)</th>
 				<th>Data de pagamento</th>
+				<th>Recebido</th>
 				<th>Pago</th>
 			</tr>
 		</thead>
@@ -89,24 +92,82 @@
 					<input type="text" 
 						class="form-control input-sm" 
 						v-model="p.value"
-						v-on:blur="validValueParcels">
+						v-on:blur="validValueParcels"
+						:disabled="purchase.id !== undefined">
 				</td>
 				<td>
 					<input type="date" 
 						class="form-control input-sm" 
 						v-model="p.paymentDate"
-						v-on:blur="validDateParcels">
+						v-on:blur="validDateParcels"
+						:disabled="purchase.id !== undefined">
+				</td>
+				<td>
+					<input type="text" 
+						class="form-control input-sm" 
+						v-model="p.received"
+						v-on:blur="validValueParcels"
+						:disabled="purchase.id !== undefined">
 				</td>
 				<td>
 					<input type="checkbox" 
 						class="form-control input-sm" 
-						v-model="p.payed">
+						v-model="p.payed"
+						:disabled="purchase.id !== undefined">
 				</td>
 			</tr>
 		</tbody>
 	</table>
 	<div class="purchase-error" v-show="msgParcelAmount">{{msgParcelAmount}}</div>
 	<div class="purchase-error" v-show="msgDateAmount">{{msgDateAmount}}</div>
+</div>
+<hr />
+<div v-if="purchase.id">
+	<div class="form-inline purchase-form">
+		<label>Pagamento</label>
+		<input type="number" 
+			class="form-control input-sm purchase-form-input-params" 
+			v-model="paymentValue">
+		<input type="date" 
+			class="form-control input-sm purchase-form-input-params" 
+			v-model="paymentDate">
+		<button type="button" 
+			class="btn btn-success btn-sm" 
+			v-on:click="addPayment">
+				<span class="glyphicon glyphicon-ok"></span>
+		</button>
+	</div>
+</div>
+<div v-if="purchase.id">
+	<div class="purchase-parcels">
+		<table class="table table-hover table-condensed">
+			<thead>
+				<tr>
+					<th>Valor (R$)</th>
+					<th>Data de recebimento</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="p in payments">
+					<td>
+						<input type="text" 
+							class="form-control input-sm" 
+							v-model="p.value"
+							v-on:blur="validValueParcels"
+							:disabled="purchase.id !== undefined">
+					</td>
+					<td>
+						<input type="date" 
+							class="form-control input-sm" 
+							v-model="p.paymentDate"
+							v-on:blur="validDateParcels"
+							:disabled="purchase.id !== undefined">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<label>Recebido: {{purchase.payed}} R$</label>
+	</div>
 </div>
 <br />
 <button type="button" 

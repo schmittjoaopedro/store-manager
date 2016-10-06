@@ -10,6 +10,11 @@ var scope = new Vue({
 		billVisiblePage: 5,
 		billCurrentPage: 1,
 		parcels: [],
+		parcellCount: 1,
+		parcellDateStart: null,
+		payments: [],
+		paymentValue: 0,
+		paymentDate: null,
 		clients: [],
 		clientView: false,
 		clientPages: 0,
@@ -19,8 +24,6 @@ var scope = new Vue({
 		clientCurrentPage: 1,
 		clientName: null,
 		clientCpf: null,
-		parcellCount: 1,
-		parcellDateStart: null,
 		msgAmount: '',
 		msgParcelAmount: '',
 		msgDateAmount: '',
@@ -31,6 +34,7 @@ var scope = new Vue({
 			this.register = true;
 			this.parcellCount = 1;
 			this.parcels = [];
+			this.payments = [];
 			this.billPage = 0;
 			this.bill = {
 				purchaseDate: moment(new Date()).format("YYYY-MM-DD")
@@ -111,6 +115,12 @@ var scope = new Vue({
 			}
 			if(this.bill)
 				this.bill.purchaseDate = moment(this.bill.purchaseDate, "YYYY-MM-DD").toDate().getTime();
+			if(this.bill.parcels)
+				for(var i = 0; i < this.bill.parcels.length; i++)
+					this.bill.parcels[i].paymentDate = moment(this.bill.parcels[i].paymentDate, "YYYY-MM-DD").toDate().getTime();
+			if(this.bill.payments)
+				for(var i = 0; i < this.bill.payments.length; i++)
+					this.bill.payments[i].paymentDate = moment(this.bill.payments[i].paymentDate, "YYYY-MM-DD").toDate().getTime();
 			$.ajax({
 				method: 'POST',
 				url: '/bills', 
@@ -162,6 +172,12 @@ var scope = new Vue({
 				if(resp.data) {
 					resp.data.forEach(function(item) {
 						item.purchaseDate = moment(new Date(item.purchaseDate)).format("DD/MM/YYYY");
+						item.parcels.forEach(function(parcel) {
+							parcel.paymentDate = moment(new Date(parcel.paymentDate)).format("YYYY-MM-DD");
+						});
+						item.payments.forEach(function(payment) {
+							payment.paymentDate = moment(new Date(payment.paymentDate)).format("YYYY-MM-DD");
+						});
 					});
 					scope.bills = resp.data;
 					scope.billCount = parseInt((resp.total - 1) / 20);
@@ -171,6 +187,33 @@ var scope = new Vue({
 			});
 		},
 		//Filter and pagination bill - end
+		addPayment: function() {
+			this.paymentValue = parseFloat(this.paymentValue);
+			if(this.paymentValue > 0) {
+				this.payments.push({
+					value: this.paymentValue,
+					paymentDate: this.paymentDate
+				});
+				var total = 0;
+				for(var i = 0; i < this.payments.length; i++) {
+					total += this.payments[i].value;
+				}
+				Vue.set(this.bill, "received", total);
+				for(var i = 0; i < this.parcels.length; i++) {
+					if(total >= this.parcels[i].value) {
+						this.parcels[i].payed = true;
+						var val = parseFloat((total - (total - this.parcels[i].value)).toFixed(2));
+						Vue.set(this.parcels[i], "received", val);
+						total = parseFloat((total - this.parcels[i].value).toFixed(2));
+					} else {
+						Vue.set(this.parcels[i], "received", total);
+						break;
+					}
+				}
+			}
+			this.paymentValue = 0;
+			this.paymentDate = moment(new Date()).format("YYYY-MM-DD");
+		},
 		generateParcels: function() {
 			var value = this.bill.amount / this.parcellCount;
 			var sum = 0;
@@ -186,7 +229,8 @@ var scope = new Vue({
 				this.bill.parcels.push({
 					value: temp,
 					paymentDate: moment(this.parcellDateStart).add(i, 'month').format('YYYY-MM-DD'),
-					payed: false
+					payed: false,
+					received: 0
 				});
 			}
 			this.validValueParcels();
@@ -197,7 +241,9 @@ var scope = new Vue({
 			this.parcellCount = 1;
 			this.bill = JSON.parse(JSON.stringify(entity));
 			this.parcels = this.bill.parcels;
+			this.payments = this.bill.payments;
 			this.bill.purchaseDate = moment(entity.purchaseDate, "DD/MM/AAAA").format("YYYY-MM-DD");
+			this.paymentDate = moment(new Date()).format("YYYY-MM-DD");
 		},
 		remove: function(bill) {
 			$.ajax({

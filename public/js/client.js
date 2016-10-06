@@ -107,7 +107,6 @@ var scope = new Vue({
 		validFields: function() {
 			var state = this.validName();
 			state &= this.validCpf();
-			state &= this.validDate();
 			state &= this.validCountry();
 			state &= this.validState();
 			state &= this.validCity();
@@ -129,29 +128,15 @@ var scope = new Vue({
 			return true;
 		},
 		validCpf: function() {
-			if(!this.client.cpf) {
-				this.msgCpf = "Campo obrigatório!";
-				return false;
-			} else if(!(new RegExp(/^[0-9][0-9][0-9].[0-9][0-9][0-9].[0-9][0-9][0-9]-[0-9][0-9]$/)).test(this.client.cpf)) {
+			if(this.client.cpf && !(new RegExp(/^[0-9][0-9][0-9].[0-9][0-9][0-9].[0-9][0-9][0-9]-[0-9][0-9]$/)).test(this.client.cpf)) {
 				this.msgCpf = "CPF inválido!";
 				return false;
 			}
 			this.msgCpf = null;
 			return true;
 		},
-		validDate: function() {
-			if(!this.client.bornDate) {
-				this.msgDate = "Campo obrigatório!";
-				return false;
-			}
-			this.msgDate = null;
-			return true;
-		},
 		validCountry: function() {
-			if(!this.client.country) {
-				this.msgCountry = "Campo obrigatório!";
-				return false;
-			} else if(!(new RegExp(/^[a-zA-Z ]+$/)).test(this.client.country)) {
+			if(this.client.country && !(new RegExp(/^[a-zA-Z ]+$/)).test(this.client.country)) {
 				this.msgCountry= "Nome inválido, use somente letras sem acentos!";
 				return false;
 			}
@@ -159,10 +144,7 @@ var scope = new Vue({
 			return true;
 		},
 		validState: function() {
-			if(!this.client.state) {
-				this.msgState = "Campo obrigatório!";
-				return false;
-			} else if(!(new RegExp(/^[A-Z][A-Z]$/)).test(this.client.state)) {
+			if(this.client.state && !(new RegExp(/^[A-Z][A-Z]$/)).test(this.client.state)) {
 				this.msgState = "Estado inválido, use somente acrônimos, ex: SC, RS, SP, PR!";
 				return false;
 			}
@@ -170,10 +152,7 @@ var scope = new Vue({
 			return true;
 		},
 		validCity: function() {
-			if(!this.client.city) {
-				this.msgCity = "Campo obrigatório!";
-				return false;
-			} else if(!(new RegExp(/^[a-zA-Z ]+$/)).test(this.client.city)) {
+			if(this.client.city && !(new RegExp(/^[a-zA-Z ]+$/)).test(this.client.city)) {
 				this.msgCity = "Nome inválido, use somente letras sem acentos!";
 				return false;
 			}
@@ -181,7 +160,7 @@ var scope = new Vue({
 			return true;
 		},
 		validAddress: function() {
-			if(!this.client.address) {
+			if(this.client.address && !this.client.address) {
 				this.msgAddress = "Campo obrigatório!";
 				return false;
 			}

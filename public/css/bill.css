@@ -1,5 +1,9 @@
+.bill-root {
+	min-width: 800px;
+}
+
 .bill-form {
-	max-width: 50%;
+	max-width: 80%;
 }
 
 .bill-form label {
@@ -11,7 +15,7 @@
 }
 
 .bill-form-input-params {
-	width: 180px !important;
+	width: 140px !important;
 }
 
 .bill-space {

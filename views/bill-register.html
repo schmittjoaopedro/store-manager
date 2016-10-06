@@ -49,30 +49,33 @@
 			</select>
 			<div class="bill-error">{{msgPaymentType}}</div>
 		</div>
-		<div>
-			<label>Valor (R$)</label>
-			<input type="text" 
-				name="amount"
-				v-on:blur="validAmount"
-				class="form-control input-sm bill-form-input" 
-				v-model="bill.amount">
-			<div class="bill-error">{{msgAmount}}</div>
-		</div>
-		<div v-if="!bill.id">
-			<label>Parcelas</label>
-			<input type="text" 
-				class="form-control input-sm bill-form-input-params" 
-				v-model="parcellCount">
-			<input type="date" 
-				class="form-control input-sm bill-form-input-params" 
-				v-model="parcellDateStart">
-			<button type="button" 
-				class="btn btn-success btn-sm" 
-				v-on:click="generateParcels">
-					<span class="glyphicon glyphicon-ok"></span>
-			</button>
-		</div>		
 	</div>
+</div>
+<hr />
+<div class="form-inline bill-form">
+	<b>Valor:</b>
+	<input type="number" 
+		name="amount"
+		v-on:blur="validAmount"
+		class="form-control input-sm bill-form-input-params" 
+		v-model="bill.amount"
+		:disabled="bill.id !== undefined">
+	<span v-if="!bill.id">
+		<b>Parcelas:</b>
+		<input type="number" 
+			class="form-control input-sm bill-form-input-params" 
+			v-model="parcellCount">
+		<b>Data:</b>
+		<input type="date" 
+			class="form-control input-sm bill-form-input-params" 
+			v-model="parcellDateStart">
+		<button type="button" 
+			class="btn btn-success btn-sm" 
+			v-on:click="generateParcels">
+				<span class="glyphicon glyphicon-ok"></span>
+		</button>
+	</span>	
+	<div class="bill-error">{{msgAmount}}</div>
 </div>
 <div class="bill-parcels">
 	<table class="table table-hover table-condensed">
@@ -80,6 +83,7 @@
 			<tr>
 				<th>Valor (R$)</th>
 				<th>Data de pagamento</th>
+				<th>Recebido</th>
 				<th>Pago</th>
 			</tr>
 		</thead>
@@ -89,24 +93,83 @@
 					<input type="text" 
 						class="form-control input-sm" 
 						v-model="p.value"
-						v-on:blur="validValueParcels">
+						v-on:blur="validValueParcels"
+						:disabled="bill.id !== undefined">
 				</td>
 				<td>
 					<input type="date" 
 						class="form-control input-sm" 
 						v-model="p.paymentDate"
-						v-on:blur="validDateParcels">
+						v-on:blur="validDateParcels"
+						:disabled="bill.id !== undefined">
+				</td>
+				<td>
+					<input type="text" 
+						class="form-control input-sm" 
+						v-model="p.received"
+						v-on:blur="validValueParcels"
+						:disabled="bill.id !== undefined">
 				</td>
 				<td>
 					<input type="checkbox" 
 						class="form-control input-sm" 
-						v-model="p.payed">
+						v-model="p.payed"
+						:disabled="bill.id !== undefined">
 				</td>
 			</tr>
 		</tbody>
 	</table>
+	<label>Total: {{bill.amount}} R$</label>
 	<div class="bill-error" v-show="msgParcelAmount">{{msgParcelAmount}}</div>
 	<div class="bill-error" v-show="msgDateAmount">{{msgDateAmount}}</div>
+</div>
+<hr />
+<div v-if="bill.id">
+	<div class="form-inline bill-form">
+		<label>Recebimento</label>
+		<input type="number" 
+			class="form-control input-sm bill-form-input-params" 
+			v-model="paymentValue">
+		<input type="date" 
+			class="form-control input-sm bill-form-input-params" 
+			v-model="paymentDate">
+		<button type="button" 
+			class="btn btn-success btn-sm" 
+			v-on:click="addPayment">
+				<span class="glyphicon glyphicon-ok"></span>
+		</button>
+	</div>
+</div>
+<div v-if="bill.id">
+	<div class="bill-parcels">
+		<table class="table table-hover table-condensed">
+			<thead>
+				<tr>
+					<th>Valor (R$)</th>
+					<th>Data de recebimento</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="p in payments">
+					<td>
+						<input type="text" 
+							class="form-control input-sm" 
+							v-model="p.value"
+							v-on:blur="validValueParcels"
+							:disabled="bill.id !== undefined">
+					</td>
+					<td>
+						<input type="date" 
+							class="form-control input-sm" 
+							v-model="p.paymentDate"
+							v-on:blur="validDateParcels"
+							:disabled="bill.id !== undefined">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<label>Recebido: {{bill.received}} R$</label>
+	</div>
 </div>
 <br />
 <button type="button" 
