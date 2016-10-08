@@ -1,0 +1,46 @@
+<div>
+	<label>Data de ínicio</label>
+	<input type="date" 
+		v-model="filter.startDate" 
+		class="form-control input-sm" />
+	<br />
+	<label>Data de fim</label>
+	<input type="date" 
+		v-model="filter.endDate" 
+		class="form-control input-sm" />
+	<br />
+	<label>Cliente</label>
+	<input type="text" 
+		v-model="filter.client" 
+		class="form-control input-sm" />
+	<br />
+	<label>CPF</label>
+	<input type="text" 
+		v-model="filter.cpf" 
+		class="form-control input-sm" />
+	<br />
+	<label>Tipo de filtro</label>
+	<select v-model="filter.filterType" 
+		class="form-control input-sm">
+		<option></option>
+		<option>Aberto</option>
+		<option>Pago</option>
+	</select>
+	<br />
+	<label>Tipo de pagamento</label>
+	<select v-model="filter.paymentType" 
+		class="form-control input-sm">
+		<option></option>
+		<option>Credito</option>
+		<option>Debito</option>
+		<option>Dinheiro</option>
+		<option>Boleto</option>
+		<option>Cheque</option>
+	</select>
+	<br />
+	<button type="button" 
+		class="btn btn-success btn-sm" 
+		v-on:click="filterData">
+			<span class="glyphicon glyphicon-search"></span>
+	</button>
+</div>

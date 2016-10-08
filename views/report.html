@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<%- include('header-imports.html') -%>
+		<link rel="stylesheet" type="text/css" href="/css/report.css">
+	</head>
+	<body>
+		<div id="report" v-cloak>
+			<%- include('header-bar.html') -%>
+			<h2>Relatório</h2>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-sm-3">
+						<%- include('report-form.html') -%>
+					</div>
+					<div class="col-sm-9">
+						<%- include('report-list.html') -%>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="/lib/moment/moment.js"></script>
+	<script type="text/javascript" src="/js/report.js"></script>
+</html>

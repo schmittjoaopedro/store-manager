@@ -56,10 +56,11 @@ function mountSupplier(res, workbook) {
 }
 
 function mountPurchase(res, workbook) {
-	models.Purchase.find({}).select('id amount purchaseDate note paymentType supplier parcels').populate('supplier').then(function (data) {
+	models.Purchase.find({}).select('id amount purchaseDate note paymentType supplier parcels payments').populate('supplier').then(function (data) {
 		if(data.length == 0) data = [];
 		var worksheet = workbook.addWorksheet("Compras");
-		var worksheet2 = workbook.addWorksheet("Parcelamento das compras");
+		var worksheet2 = workbook.addWorksheet("Compras parcelas");
+		var worksheet3 = workbook.addWorksheet("Compras pagas");
 		worksheet.columns = [
 			{ header: 'Cod.', key: 'id', width: 30 },
 			{ header: 'Valor', key: 'amount', width: 20 },
@@ -73,6 +74,11 @@ function mountPurchase(res, workbook) {
 			{ header: 'Data de pagamento', key: 'paymentDate', width: 30 },
 			{ header: 'Pago', key: 'payed', width: 30 }
 		];
+		worksheet3.columns = [
+			{ header: 'Cod. da venda', key: 'id', width: 30 },
+			{ header: 'Valor', key: 'value', width: 30 },
+			{ header: 'Data de pagamento', key: 'paymentDate', width: 30 }
+		];
 		for(var i in data) {
 			var dt = data[i].toJSON();
 			console.info(dt);
@@ -83,17 +89,29 @@ function mountPurchase(res, workbook) {
 				paymentType: dt.paymentType,
 				supplier: dt.supplier.id
 			}).commit();
-			dt.parcels.forEach(function (parcel) {
-				worksheet2.addRow({
-					id: dt.id,
-					value: parcel.value,
-					paymentDate: parcel.paymentDate,
-					payed: parcel.payed ? 'Sim' : 'Não'
-				}).commit();
-			});
+			if(dt.parcels) {
+				dt.parcels.forEach(function (parcel) {
+					worksheet2.addRow({
+						id: dt.id,
+						value: parcel.value,
+						paymentDate: parcel.paymentDate,
+						payed: parcel.payed ? 'Sim' : 'Não'
+					}).commit();
+				});
+			}
+			if(dt.payments) {
+				dt.payments.forEach(function (payment) {
+					worksheet3.addRow({
+						id: dt.id,
+						value: payment.value,
+						paymentDate: payment.paymentDate
+					}).commit();
+				});
+			}
 		}
 		worksheet.commit();
 		worksheet2.commit();
+		worksheet3.commit();
 		mountClient(res, workbook);
 	});
 }
@@ -123,10 +141,11 @@ function mountClient(res, workbook) {
 }
 
 function mountBills(res, workbook) {
-	models.Bill.find({}).select('id amount purchaseDate notes paymentType client parcels').populate('client').then(function (data) {
+	models.Bill.find({}).select('id amount purchaseDate notes paymentType client parcels payments').populate('client').then(function (data) {
 		if(data.length == 0) data = [];
 		var worksheet = workbook.addWorksheet("Vendas");
-		var worksheet2 = workbook.addWorksheet("Parcelamento das vendas");
+		var worksheet2 = workbook.addWorksheet("Vendas parcelas");
+		var worksheet3 = workbook.addWorksheet("Vendas pagas");
 		worksheet.columns = [
 			{ header: 'Cod.', key: 'id', width: 30 },
 			{ header: 'Valor', key: 'amount', width: 20 },
@@ -140,9 +159,13 @@ function mountBills(res, workbook) {
 			{ header: 'Data de pagamento', key: 'paymentDate', width: 30 },
 			{ header: 'Pago', key: 'payed', width: 30 }
 		];
+		worksheet3.columns = [
+			{ header: 'Cod. da venda', key: 'id', width: 30 },
+			{ header: 'Valor', key: 'value', width: 30 },
+			{ header: 'Data de pagamento', key: 'paymentDate', width: 30 }
+		];
 		for(var i in data) {
 			var dt = data[i].toJSON();
-			console.info(dt);
 			worksheet.addRow({
 				id: dt.id,
 				amount: dt.amount,
@@ -150,17 +173,29 @@ function mountBills(res, workbook) {
 				paymentType: dt.paymentType,
 				client: dt.client.id
 			}).commit();
-			dt.parcels.forEach(function (parcel) {
-				worksheet2.addRow({
-					id: dt.id,
-					value: parcel.value,
-					paymentDate: parcel.paymentDate,
-					payed: parcel.payed ? 'Sim' : 'Não'
-				}).commit();
-			});
+			if(dt.parcels) {
+				dt.parcels.forEach(function (parcel) {
+					worksheet2.addRow({
+						id: dt.id,
+						value: parcel.value,
+						paymentDate: parcel.paymentDate,
+						payed: parcel.payed ? 'Sim' : 'Não'
+					}).commit();
+				});
+			}
+			if(dt.payments) {
+				dt.payments.forEach(function (payment) {
+					worksheet3.addRow({
+						id: dt.id,
+						value: payment.value,
+						paymentDate: payment.paymentDate
+					}).commit();
+				});
+			}
 		}
 		worksheet.commit();
 		worksheet2.commit();
+		worksheet3.commit();
 		workbook.commit();
 	});
 }

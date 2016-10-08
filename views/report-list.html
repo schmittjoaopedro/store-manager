@@ -1,0 +1,37 @@
+<div class="row">
+	<div class="col-sm-4">
+		<label>Total vendido R$: {{totalAmount}}</label>
+	</div>
+	<div class="col-sm-4">
+		<label>Total recebido R$: {{totalReceived}}</label>
+	</div>
+	<div class="col-sm-4">
+		<label>Total a receber R$: {{totalBalance}}</label>
+	</div>
+</div>
+<div class="table-responsive">
+	<table class="table table-hover table-condensed">
+		<thead>
+			<tr>
+				<th>Client</th>
+				<th>Total</th>
+				<th>Pago</th>
+				<th>Saldo</th>
+				<th>Data</th>
+				<th>Tipo de pagamento</th>
+				<th>CPF</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr v-for="r in results">
+				<td>{{r.client}}</td>
+				<td>{{r.amount}}</td>
+				<td>{{r.received}}</td>
+				<td>{{r.balance}}</td>
+				<td>{{r.purchaseDate}}</td>
+				<td>{{r.paymentType}}</td>
+				<td>{{r.cpf}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
